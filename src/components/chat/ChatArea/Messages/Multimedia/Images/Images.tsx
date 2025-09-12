@@ -1,9 +1,9 @@
 import { memo } from 'react'
 
-import { type ImageData } from '@/types/os'
+import { type Image } from '@/types/os'
 import { cn } from '@/lib/utils'
 
-const Images = ({ images }: { images: ImageData[] }) => (
+const Images = ({ images }: { images: Image[] }) => (
   <div
     className={cn(
       'grid max-w-xl gap-4',

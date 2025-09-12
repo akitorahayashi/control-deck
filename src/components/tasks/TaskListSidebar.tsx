@@ -10,9 +10,7 @@ import { cn } from '@/lib/utils'
 
 const SidebarHeader = () => (
   <div className="flex items-center gap-2 p-2">
-    <Heading size={2}>
-      Control Deck
-    </Heading>
+    <Heading size={2}>Control Deck</Heading>
   </div>
 )
 
@@ -39,12 +37,10 @@ const TaskItem = ({
         isSelected ? 'bg-accent' : 'hover:bg-accent/50'
       )}
     >
-      <div
-        className={cn('h-2 w-2 rounded-full', statusColors[task.status])}
-      />
+      <div className={cn('h-2 w-2 rounded-full', statusColors[task.status])} />
       <div className="flex-grow">
         <p className="text-sm font-medium">{task.title}</p>
-        <p className="text-xs text-muted-foreground">{task.agent.name}</p>
+        <p className="text-muted-foreground text-xs">{task.agent.name}</p>
       </div>
     </div>
   )

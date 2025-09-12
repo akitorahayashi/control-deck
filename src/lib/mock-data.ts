@@ -1,4 +1,4 @@
-import { Agent, Task, TaskConversation, TaskStatus } from '@/types/control-deck'
+import { Agent, Task, TaskConversation } from '@/types/control-deck'
 import dayjs from 'dayjs'
 
 // Mock Agents
@@ -6,7 +6,8 @@ export const mockAgents: Agent[] = [
   {
     id: 'agent-001',
     name: 'Research Assistant',
-    description: 'An agent specialized in gathering and summarizing information.'
+    description:
+      'An agent specialized in gathering and summarizing information.'
   },
   {
     id: 'agent-002',
@@ -100,21 +101,21 @@ export const mockConversations: TaskConversation[] = [
     taskId: 'task-003',
     messages: []
   },
-    {
+  {
     taskId: 'task-004',
     messages: [
       {
         id: 'msg-4-1',
         role: 'user',
-        content:
-          'Can you summarize the attached earnings report for me?',
+        content: 'Can you summarize the attached earnings report for me?',
         timestamp: dayjs().subtract(3, 'day').toISOString()
       },
       {
         id: 'msg-4-2',
         role: 'agent',
         agentId: 'agent-001',
-        content: 'An error occurred while processing the document. Please try again or use a different file format.',
+        content:
+          'An error occurred while processing the document. Please try again or use a different file format.',
         timestamp: dayjs().subtract(2, 'day').toISOString()
       }
     ]

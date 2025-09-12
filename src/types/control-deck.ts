@@ -1,3 +1,12 @@
+import {
+  Image,
+  Video,
+  Audio,
+  ReasoningStep,
+  ReferenceData,
+  ToolCall
+} from '@/types/os'
+
 export interface Agent {
   id: string
   name: string
@@ -22,6 +31,16 @@ export interface ChatMessage {
   agentId?: string
   content: string
   timestamp: string
+  streamingError?: boolean
+  videos?: Video[]
+  images?: Image[]
+  audio?: Audio[]
+  response_audio?: string | Blob | { transcript: string; content: string }
+  tool_calls?: ToolCall[]
+  extra_data?: {
+    reasoning_steps?: ReasoningStep[]
+    references?: ReferenceData[]
+  }
 }
 
 export interface TaskConversation {

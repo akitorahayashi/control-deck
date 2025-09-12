@@ -28,10 +28,8 @@ export const TaskView = () => {
     return (
       <div className="flex h-full flex-1 items-center justify-center">
         <div className="text-center">
-          <Heading size={2}>
-            No Task Selected
-          </Heading>
-          <Paragraph className="mt-2 text-muted-foreground">
+          <Heading size={2}>No Task Selected</Heading>
+          <Paragraph className="text-muted-foreground mt-2">
             Please select a task from the sidebar to view its details.
           </Paragraph>
         </div>
@@ -42,13 +40,13 @@ export const TaskView = () => {
   return (
     <div className="flex h-screen flex-1 flex-col">
       <header className="border-b p-4">
-        <Heading size={1}>
-          {selectedTask.title}
-        </Heading>
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+        <Heading size={1}>{selectedTask.title}</Heading>
+        <div className="text-muted-foreground flex items-center gap-4 text-sm">
           <span>Agent: {selectedTask.agent.name}</span>
           <span>Status: {selectedTask.status}</span>
-          <span>Last Updated: {dayjs(selectedTask.lastUpdatedAt).fromNow()}</span>
+          <span>
+            Last Updated: {dayjs(selectedTask.lastUpdatedAt).fromNow()}
+          </span>
         </div>
       </header>
       <div className="flex-1 overflow-y-auto">

@@ -1,4 +1,5 @@
-import type { ChatMessage } from '@/types/os'
+import type { ChatMessage } from '@/types/control-deck'
+import type { ToolCall, ReasoningStep, Reference } from '@/types/os'
 
 import { AgentMessage, UserMessage } from './MessageItem'
 import Tooltip from '@/components/ui/tooltip'
@@ -7,8 +8,7 @@ import {
   ToolCallProps,
   ReasoningStepProps,
   ReasoningProps,
-  ReferenceData,
-  Reference
+  ReferenceData
 } from '@/types/os'
 import React, { type FC } from 'react'
 
@@ -47,12 +47,14 @@ const References: FC<ReferenceProps> = ({ references }) => (
         className="flex flex-col gap-3"
       >
         <div className="flex flex-wrap gap-3">
-          {referenceData.references.map((reference, refIndex) => (
-            <ReferenceItem
-              key={`${reference.name}-${reference.meta_data.chunk}-${refIndex}`}
-              reference={reference}
-            />
-          ))}
+          {referenceData.references.map(
+            (reference: Reference, refIndex: number) => (
+              <ReferenceItem
+                key={`${reference.name}-${reference.meta_data.chunk}-${refIndex}`}
+                reference={reference}
+              />
+            )
+          )}
         </div>
       </div>
     ))}
@@ -109,7 +111,7 @@ const AgentMessageWrapper = ({ message }: MessageWrapperProps) => {
           </Tooltip>
 
           <div className="flex flex-wrap gap-2">
-            {message.tool_calls.map((toolCall, index) => (
+            {message.tool_calls.map((toolCall: ToolCall, index: number) => (
               <ToolComponent
                 key={
                   toolCall.tool_call_id ||
@@ -135,7 +137,7 @@ const Reasoning: FC<ReasoningStepProps> = ({ index, stepTitle }) => (
 )
 const Reasonings: FC<ReasoningProps> = ({ reasoning }) => (
   <div className="flex flex-col items-start justify-center gap-2">
-    {reasoning.map((title, index) => (
+    {reasoning.map((title: ReasoningStep, index: number) => (
       <Reasoning
         key={`${title.title}-${title.action}-${index}`}
         stepTitle={title.title}
@@ -159,7 +161,7 @@ const Messages = ({ messages }: MessageListProps) => {
   return (
     <>
       {messages.map((message, index) => {
-        const key = `${message.role}-${message.created_at}-${index}`
+        const key = `${message.role}-${message.timestamp}-${index}`
         const isLastMessage = index === messages.length - 1
 
         if (message.role === 'agent') {

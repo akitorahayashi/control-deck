@@ -2,14 +2,14 @@
 
 import { memo, useMemo } from 'react'
 
-import { type AudioData } from '@/types/os'
+import { type Audio } from '@/types/os'
 import { decodeBase64Audio } from '@/lib/audio'
 
 /**
  * Renders a single audio item with controls
- * @param audio - AudioData object containing url or base64 audio data
+ * @param audio - Audio object containing url or base64 audio data
  */
-const AudioItem = memo(({ audio }: { audio: AudioData }) => {
+const AudioItem = memo(({ audio }: { audio: Audio }) => {
   const audioUrl = useMemo(() => {
     if (audio?.url) {
       return audio.url
@@ -47,9 +47,9 @@ AudioItem.displayName = 'AudioItem'
 
 /**
  * Renders a list of audio elements
- * @param audio - Array of AudioData objects
+ * @param audio - Array of Audio objects
  */
-const Audios = memo(({ audio }: { audio: AudioData[] }) => (
+const Audios = memo(({ audio }: { audio: Audio[] }) => (
   <div className="flex flex-col gap-4">
     {audio.map((audio_item, index) => (
       // TODO :: find a better way to handle the key

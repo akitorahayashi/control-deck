@@ -2,6 +2,7 @@ import Icon from '@/components/ui/icon'
 import MarkdownRenderer from '@/components/ui/typography/MarkdownRenderer'
 import { useStore } from '@/store'
 import type { ChatMessage } from '@/types/control-deck'
+import type { Audio } from '@/types/os'
 import { getAgentIcon } from '@/lib/agentIcons'
 import { getAgentName } from '@/lib/agentUtils'
 import Videos from './Multimedia/Videos'
@@ -44,21 +45,31 @@ const AgentMessage = ({ message }: MessageProps) => {
       </div>
     )
   } else if (message.response_audio) {
-    if (!message.response_audio.transcript) {
+    if (
+      typeof message.response_audio === 'object' &&
+      'transcript' in message.response_audio
+    ) {
+      if (!message.response_audio.transcript) {
+        messageContent = (
+          <div className="mt-2 flex items-start">
+            <AgentThinkingLoader />
+          </div>
+        )
+      } else {
+        const audioObject: Audio = { content: message.response_audio.content }
+        messageContent = (
+          <div className="flex w-full flex-col gap-4">
+            <MarkdownRenderer>
+              {message.response_audio.transcript}
+            </MarkdownRenderer>
+            {message.response_audio.content && <Audios audio={[audioObject]} />}
+          </div>
+        )
+      }
+    } else {
       messageContent = (
         <div className="mt-2 flex items-start">
           <AgentThinkingLoader />
-        </div>
-      )
-    } else {
-      messageContent = (
-        <div className="flex w-full flex-col gap-4">
-          <MarkdownRenderer>
-            {message.response_audio.transcript}
-          </MarkdownRenderer>
-          {message.response_audio.content && message.response_audio && (
-            <Audios audio={[message.response_audio]} />
-          )}
         </div>
       )
     }
@@ -70,14 +81,16 @@ const AgentMessage = ({ message }: MessageProps) => {
     )
   }
 
-  const agentIconType = message.agentId ? getAgentIcon(message.agentId) : 'agent'
+  const agentIconType = message.agentId
+    ? getAgentIcon(message.agentId)
+    : 'agent'
   const agentName = message.agentId ? getAgentName(message.agentId) : 'Agent'
-  
+
   return (
     <div className="flex flex-row items-start gap-4 font-geist">
-      <div className="flex flex-col items-center gap-1 flex-shrink-0">
+      <div className="flex flex-shrink-0 flex-col items-center gap-1">
         <Icon type={agentIconType} size="sm" />
-        <span className="text-xs text-muted-foreground">{agentName}</span>
+        <span className="text-muted-foreground text-xs">{agentName}</span>
       </div>
       {messageContent}
     </div>
