@@ -2,7 +2,7 @@ import { Agent, Task, TaskConversation, TaskStatus } from '@/types/control-deck'
 import dayjs from 'dayjs'
 
 // Mock Agents
-const mockAgents: Agent[] = [
+export const mockAgents: Agent[] = [
   {
     id: 'agent-001',
     name: 'Research Assistant',
@@ -70,6 +70,7 @@ export const mockConversations: TaskConversation[] = [
       {
         id: 'msg-1-2',
         role: 'agent',
+        agentId: 'agent-003',
         content:
           'Certainly. I have analyzed the Q2 sales data. Here is the summary: Revenue is up 15% year-over-year, with the strongest growth in the North America region. I have attached a detailed report.',
         timestamp: dayjs().subtract(1, 'day').toISOString()
@@ -89,6 +90,7 @@ export const mockConversations: TaskConversation[] = [
       {
         id: 'msg-2-2',
         role: 'agent',
+        agentId: 'agent-002',
         content: 'I am on it. Generating the React component now...',
         timestamp: dayjs().subtract(5, 'minute').toISOString()
       }
@@ -111,6 +113,7 @@ export const mockConversations: TaskConversation[] = [
       {
         id: 'msg-4-2',
         role: 'agent',
+        agentId: 'agent-001',
         content: 'An error occurred while processing the document. Please try again or use a different file format.',
         timestamp: dayjs().subtract(2, 'day').toISOString()
       }
