@@ -1,9 +1,7 @@
 import { create } from 'zustand'
 import { RefObject, createRef } from 'react'
-import {
-  Agent,
-  ChatMessage
-} from '@/types/control-deck'
+import { Agent } from '@/types/agent'
+import { ChatMessage } from '@/types/chat'
 
 interface Store {
   agents: Agent[]

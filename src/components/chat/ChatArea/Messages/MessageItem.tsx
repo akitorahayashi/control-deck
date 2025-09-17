@@ -1,7 +1,7 @@
 import Icon from '@/components/ui/icon'
 import MarkdownRenderer from '@/components/ui/typography/MarkdownRenderer'
 import { useStore } from '@/store'
-import type { ChatMessage } from '@/types/control-deck'
+import type { ChatMessage } from '@/types/chat'
 import { getAgentIcon } from '@/lib/agentIcons'
 import Videos from './Multimedia/Videos'
 import Images from './Multimedia/Images'

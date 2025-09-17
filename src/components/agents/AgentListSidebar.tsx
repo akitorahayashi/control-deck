@@ -5,7 +5,7 @@ import Icon from '@/components/ui/icon'
 import Heading from '@/components/ui/typography/Heading'
 import { useStore } from '@/store'
 import { mockAgents } from '@/lib/mock-data'
-import { Agent } from '@/types/control-deck'
+import { Agent } from '@/types/agent'
 import { cn } from '@/lib/utils'
 
 const SidebarHeader = () => (
@@ -77,7 +77,7 @@ export const AgentListSidebar = () => {
   const [isResizing, setIsResizing] = useState(false)
   const sidebarRef = useRef<HTMLDivElement>(null)
   const { agents, setAgents, selectedAgent } = useStore()
-  
+
   const MIN_WIDTH = 200
   const MAX_WIDTH = 600
   const COLLAPSED_WIDTH = 53
@@ -94,7 +94,7 @@ export const AgentListSidebar = () => {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isResizing) return
-      
+
       const newWidth = e.clientX
       if (newWidth >= MIN_WIDTH && newWidth <= MAX_WIDTH) {
         setSidebarWidth(newWidth)

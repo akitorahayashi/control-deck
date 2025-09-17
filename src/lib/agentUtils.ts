@@ -1,4 +1,4 @@
-import { Agent } from '@/types/control-deck'
+import { Agent } from '@/types/agent'
 import { mockAgents } from './mock-data'
 
 export const getAgentById = (agentId: string): Agent | null => {

@@ -1,12 +1,7 @@
 'use client'
 import Heading from '@/components/ui/typography/Heading'
 import Paragraph from '@/components/ui/typography/Paragraph'
-import { Agent } from '@/types/control-deck'
-
-interface AgentInfoProps {
-  agent: Agent
-  className?: string
-}
+import { AgentInfoProps } from '@/types/agent'
 
 export const AgentInfo = ({ agent, className = "" }: AgentInfoProps) => {
   return (

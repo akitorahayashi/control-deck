@@ -1,4 +1,4 @@
-import type { ChatMessage } from '@/types/control-deck'
+import type { ChatMessage } from '@/types/chat'
 import { useStore } from '@/store'
 import Heading from '@/components/ui/typography/Heading'
 import Paragraph from '@/components/ui/typography/Paragraph'

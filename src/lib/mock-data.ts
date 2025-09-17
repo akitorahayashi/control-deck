@@ -1,4 +1,5 @@
-import { Agent, AgentConversation } from '@/types/control-deck'
+import { Agent } from '@/types/agent'
+import { AgentConversation } from '@/types/chat'
 import dayjs from 'dayjs'
 
 // Mock Agents
