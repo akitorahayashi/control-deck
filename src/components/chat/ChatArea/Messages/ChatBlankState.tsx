@@ -5,12 +5,12 @@ import Heading from '@/components/ui/typography/Heading'
 import Paragraph from '@/components/ui/typography/Paragraph'
 
 const ChatBlankState = () => {
-  const { selectedAgent } = useStore()
+  const { selectedAgent, messages } = useStore()
 
   if (selectedAgent) {
     return (
       <section
-        className="flex flex-col items-center text-center font-geist"
+        className="flex flex-col items-center justify-center text-center font-geist h-full"
         aria-label="Agent information"
       >
         <div className="flex max-w-3xl flex-col gap-y-4">
@@ -27,7 +27,7 @@ const ChatBlankState = () => {
 
   return (
     <section
-      className="flex flex-col items-center text-center font-geist"
+      className="flex flex-col items-center justify-center text-center font-geist h-full"
       aria-label="Welcome message"
     >
       <div className="flex max-w-3xl flex-col gap-y-4">

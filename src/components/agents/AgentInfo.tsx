@@ -1,0 +1,22 @@
+'use client'
+import Heading from '@/components/ui/typography/Heading'
+import Paragraph from '@/components/ui/typography/Paragraph'
+import { Agent } from '@/types/control-deck'
+
+interface AgentInfoProps {
+  agent: Agent
+  className?: string
+}
+
+export const AgentInfo = ({ agent, className = "" }: AgentInfoProps) => {
+  return (
+    <div className={`mx-auto w-full max-w-2xl text-center ${className}`}>
+      <Heading size={1} className="tracking-tight">
+        {agent.name}
+      </Heading>
+      <Paragraph className="mt-2 text-muted-foreground">
+        {agent.description}
+      </Paragraph>
+    </div>
+  )
+}
