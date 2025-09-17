@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { RefObject, createRef } from 'react'
 import {
   Task,
   ChatMessage
@@ -13,6 +14,7 @@ interface Store {
   setMessages: (messages: ChatMessage[]) => void,
   isStreaming: boolean,
   setIsStreaming: (isStreaming: boolean) => void,
+  chatInputRef: RefObject<HTMLTextAreaElement | null>
 }
 
 export const useStore = create<Store>()((set) => ({
@@ -24,4 +26,5 @@ export const useStore = create<Store>()((set) => ({
   setMessages: (messages) => set({ messages }),
   isStreaming: false,
   setIsStreaming: (isStreaming) => set({ isStreaming }),
+  chatInputRef: createRef<HTMLTextAreaElement>(),
 }))

@@ -16,7 +16,7 @@ const ChatInput = () => {
   }
 
   return (
-    <div className="relative mx-auto mb-1 flex w-full max-w-2xl items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 font-geist shadow-sm">
+    <div className="relative mx-auto mb-1 flex w-full max-w-2xl items-center gap-2 rounded-2xl border border-gray-300 bg-white px-4 py-3 font-geist shadow-sm">
       <TextArea
         placeholder={
           selectedTask
@@ -31,18 +31,17 @@ const ChatInput = () => {
             handleSubmit()
           }
         }}
-        className="flex-1 resize-none border-0 bg-transparent text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0"
+        className="flex-1 resize-none !border-0 !bg-transparent text-sm text-gray-900 placeholder-gray-500 !focus:outline-none !focus:ring-0 !outline-none !shadow-none !rounded-none px-3 py-2"
         disabled={!selectedTask}
         ref={chatInputRef}
-        rows={1}
       />
       <Button
         onClick={handleSubmit}
         disabled={!selectedTask || !inputMessage.trim()}
         size="icon"
-        className="flex-shrink-0 rounded-full bg-black p-2 text-white hover:bg-gray-800"
+        className="flex-shrink-0 rounded-full bg-black p-2 text-white hover:bg-gray-800 disabled:bg-gray-400"
       >
-        <Icon type="arrow-up" />
+        <Icon type="send" size="xs" color="white" />
       </Button>
     </div>
   )
