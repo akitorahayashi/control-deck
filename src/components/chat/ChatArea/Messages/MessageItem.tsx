@@ -17,10 +17,12 @@ const AgentMessage = ({ message }: MessageProps) => {
   return (
     <div className="flex items-start gap-4 font-geist">
       <div className="flex flex-col max-w-xs">
-        <ThinkingExpander thinking={message.thinking || ''} />
-        <div className="text-md rounded-lg font-geist p-3 bg-background-secondary text-chat-text-agent">
-          {message.content}
-        </div>
+        <ThinkingExpander thinking={message.thinking || ''} content={message.content} />
+        {message.content && (
+          <div className="text-md rounded-lg font-geist p-3 bg-background-secondary text-chat-text-agent">
+            {message.content}
+          </div>
+        )}
       </div>
     </div>
   )
