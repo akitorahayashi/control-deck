@@ -1,6 +1,6 @@
-# Control Deck
+## Control Deck
 
-A standalone UI for managing LLM agents. This project is designed to be a flexible frontend that can eventually be paired with a backend like Django.
+A standalone UI for managing LLM agents. 
 
 ## Features
 
