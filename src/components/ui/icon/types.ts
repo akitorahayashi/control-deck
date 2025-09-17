@@ -19,6 +19,13 @@ export type IconType =
   | 'references'
   | 'trash'
   | 'toggle-sidebar'
+  | 'search'
+  | 'file-text'
+  | 'sparkle'
+  | 'code'
+  | 'chart-bar'
+  | 'pencil'
+  | 'settings'
 
 export interface IconProps {
   type: IconType

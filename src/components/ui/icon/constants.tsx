@@ -16,7 +16,14 @@ import {
   ChevronDown,
   ChevronUp,
   Trash,
-  PanelLeftClose
+  PanelLeftClose,
+  Search,
+  FileText,
+  Sparkles,
+  Code,
+  BarChart3,
+  Pencil,
+  Settings
 } from 'lucide-react'
 
 import { PlusIcon } from '@radix-ui/react-icons'
@@ -39,5 +46,12 @@ export const ICONS: IconTypeMap = {
   'plus-icon': PlusIcon,
   references: ReferencesIconSvg,
   trash: Trash,
-  'toggle-sidebar': PanelLeftClose
+  'toggle-sidebar': PanelLeftClose,
+  search: Search,
+  'file-text': FileText,
+  sparkle: Sparkles,
+  code: Code,
+  'chart-bar': BarChart3,
+  pencil: Pencil,
+  settings: Settings
 }

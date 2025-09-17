@@ -6,7 +6,7 @@ import { useStore } from '@/store'
 import Icon from '@/components/ui/icon'
 
 const ChatInput = () => {
-  const { chatInputRef, selectedTask } = useStore()
+  const { chatInputRef, selectedAgent } = useStore()
   const [inputMessage, setInputMessage] = useState('')
 
   const handleSubmit = async () => {
@@ -19,9 +19,9 @@ const ChatInput = () => {
     <div className="relative mx-auto mb-1 flex w-full max-w-2xl items-center gap-2 rounded-2xl border border-gray-300 bg-white px-4 py-3 font-geist shadow-sm">
       <TextArea
         placeholder={
-          selectedTask
-            ? 'Chat is view-only for now...'
-            : 'Select a task to view the conversation'
+          selectedAgent
+            ? `Chat with ${selectedAgent.name}...`
+            : 'Select an agent to start a conversation'
         }
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
@@ -32,12 +32,12 @@ const ChatInput = () => {
           }
         }}
         className="flex-1 resize-none !border-0 !bg-transparent text-sm text-gray-900 placeholder-gray-500 !focus:outline-none !focus:ring-0 !outline-none !shadow-none !rounded-none px-3 py-2"
-        disabled={!selectedTask}
+        disabled={!selectedAgent}
         ref={chatInputRef}
       />
       <Button
         onClick={handleSubmit}
-        disabled={!selectedTask || !inputMessage.trim()}
+        disabled={!selectedAgent || !inputMessage.trim()}
         size="icon"
         className="flex-shrink-0 rounded-full bg-black p-2 text-white hover:bg-gray-800 disabled:bg-gray-400"
       >

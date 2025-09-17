@@ -1,122 +1,98 @@
-import { Agent, Task, TaskConversation, TaskStatus } from '@/types/control-deck'
+import { Agent, AgentConversation } from '@/types/control-deck'
 import dayjs from 'dayjs'
 
 // Mock Agents
 export const mockAgents: Agent[] = [
   {
     id: 'agent-001',
-    name: 'Research Assistant',
-    description: 'An agent specialized in gathering and summarizing information.'
+    name: 'Research Pro',
+    description: 'Specialized in deep research, fact-checking, and information synthesis',
+    specialty: 'research'
   },
   {
     id: 'agent-002',
-    name: 'Code Generator',
-    description: 'An agent that generates code snippets based on requirements.'
+    name: 'Summary Expert',
+    description: 'Creates concise, insightful summaries of complex documents',
+    specialty: 'summarization'
   },
   {
     id: 'agent-003',
+    name: 'Prompt Architect',
+    description: 'Designs effective prompts for optimal AI interactions',
+    specialty: 'prompt-generation'
+  },
+  {
+    id: 'agent-004',
+    name: 'Code Wizard',
+    description: 'Generates clean, efficient code in multiple languages',
+    specialty: 'coding'
+  },
+  {
+    id: 'agent-005',
     name: 'Data Analyst',
-    description: 'An agent for analyzing and visualizing data.'
-  }
-]
-
-// Mock Tasks
-export const mockTasks: Task[] = [
-  {
-    id: 'task-001',
-    title: 'Analyze Q2 Sales Data',
-    agent: mockAgents[2],
-    status: 'completed',
-    createdAt: dayjs().subtract(2, 'day').toISOString(),
-    lastUpdatedAt: dayjs().subtract(1, 'day').toISOString()
+    description: 'Analyzes data patterns and creates meaningful visualizations',
+    specialty: 'analysis'
   },
   {
-    id: 'task-002',
-    title: 'Generate a React component for a login form',
-    agent: mockAgents[1],
-    status: 'running',
-    createdAt: dayjs().subtract(1, 'hour').toISOString(),
-    lastUpdatedAt: dayjs().subtract(5, 'minute').toISOString()
-  },
-  {
-    id: 'task-003',
-    title: 'Research the latest trends in AI',
-    agent: mockAgents[0],
-    status: 'pending',
-    createdAt: dayjs().subtract(30, 'minute').toISOString(),
-    lastUpdatedAt: dayjs().subtract(30, 'minute').toISOString()
-  },
-  {
-    id: 'task-004',
-    title: 'Summarize the attached earnings report',
-    agent: mockAgents[0],
-    status: 'error',
-    createdAt: dayjs().subtract(3, 'day').toISOString(),
-    lastUpdatedAt: dayjs().subtract(2, 'day').toISOString()
+    id: 'agent-006',
+    name: 'Creative Writer',
+    description: 'Crafts engaging stories, articles, and creative content',
+    specialty: 'creative-writing'
   }
 ]
 
 // Mock Conversations
-export const mockConversations: TaskConversation[] = [
+export const mockConversations: AgentConversation[] = [
   {
-    taskId: 'task-001',
+    agentId: 'agent-001',
     messages: [
       {
         id: 'msg-1-1',
         role: 'user',
-        content: 'Please analyze the Q2 sales data and provide a summary.',
-        timestamp: dayjs().subtract(2, 'day').add(1, 'minute').toISOString()
+        content: 'Can you research the latest trends in AI for 2024?',
+        timestamp: dayjs().subtract(1, 'hour').toISOString()
       },
       {
         id: 'msg-1-2',
         role: 'agent',
-        agentId: 'agent-003',
-        content:
-          'Certainly. I have analyzed the Q2 sales data. Here is the summary: Revenue is up 15% year-over-year, with the strongest growth in the North America region. I have attached a detailed report.',
-        timestamp: dayjs().subtract(1, 'day').toISOString()
+        agentId: 'agent-001',
+        content: 'I\'ll help you research the latest AI trends. Let me gather comprehensive information about the most significant developments in AI for 2024.',
+        timestamp: dayjs().subtract(50, 'minute').toISOString()
       }
     ]
   },
   {
-    taskId: 'task-002',
-    messages: [
-      {
-        id: 'msg-2-1',
-        role: 'user',
-        content:
-          'I need a React component for a login form. It should have fields for username and password, and a submit button.',
-        timestamp: dayjs().subtract(1, 'hour').toISOString()
-      },
-      {
-        id: 'msg-2-2',
-        role: 'agent',
-        agentId: 'agent-002',
-        content: 'I am on it. Generating the React component now...',
-        timestamp: dayjs().subtract(5, 'minute').toISOString()
-      }
-    ]
-  },
-  {
-    taskId: 'task-003',
+    agentId: 'agent-002',
     messages: []
   },
-    {
-    taskId: 'task-004',
+  {
+    agentId: 'agent-003',
+    messages: []
+  },
+  {
+    agentId: 'agent-004',
     messages: [
       {
         id: 'msg-4-1',
         role: 'user',
-        content:
-          'Can you summarize the attached earnings report for me?',
-        timestamp: dayjs().subtract(3, 'day').toISOString()
+        content: 'I need a React component for a login form with username and password fields.',
+        timestamp: dayjs().subtract(2, 'hour').toISOString()
       },
       {
         id: 'msg-4-2',
         role: 'agent',
-        agentId: 'agent-001',
-        content: 'An error occurred while processing the document. Please try again or use a different file format.',
-        timestamp: dayjs().subtract(2, 'day').toISOString()
+        agentId: 'agent-004',
+        content: 'I\'ll create a clean, modern React login component for you. Let me build that with proper form validation and styling.',
+        timestamp: dayjs().subtract(1, 'hour').toISOString()
       }
     ]
+  },
+  {
+    agentId: 'agent-005',
+    messages: []
+  },
+  {
+    agentId: 'agent-006',
+    messages: []
   }
 ]

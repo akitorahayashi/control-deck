@@ -1,15 +1,15 @@
 import { create } from 'zustand'
 import { RefObject, createRef } from 'react'
 import {
-  Task,
+  Agent,
   ChatMessage
 } from '@/types/control-deck'
 
 interface Store {
-  tasks: Task[]
-  setTasks: (tasks: Task[]) => void
-  selectedTask: Task | null
-  setSelectedTask: (task: Task | null) => void
+  agents: Agent[]
+  setAgents: (agents: Agent[]) => void
+  selectedAgent: Agent | null
+  setSelectedAgent: (agent: Agent | null) => void
   messages: ChatMessage[]
   setMessages: (messages: ChatMessage[]) => void,
   isStreaming: boolean,
@@ -18,10 +18,10 @@ interface Store {
 }
 
 export const useStore = create<Store>()((set) => ({
-  tasks: [],
-  setTasks: (tasks) => set({ tasks }),
-  selectedTask: null,
-  setSelectedTask: (task) => set({ selectedTask: task }),
+  agents: [],
+  setAgents: (agents) => set({ agents }),
+  selectedAgent: null,
+  setSelectedAgent: (agent) => set({ selectedAgent: agent }),
   messages: [],
   setMessages: (messages) => set({ messages }),
   isStreaming: false,

@@ -5,34 +5,31 @@ import { mockConversations } from '@/lib/mock-data'
 import { useEffect } from 'react'
 import Heading from '../ui/typography/Heading'
 import Paragraph from '../ui/typography/Paragraph'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
+import { StatusBar } from '../ui/StatusBar/StatusBar'
 
-dayjs.extend(relativeTime)
-
-export const TaskView = () => {
-  const { selectedTask, setMessages } = useStore()
+export const AgentView = () => {
+  const { selectedAgent, setMessages } = useStore()
 
   useEffect(() => {
-    if (selectedTask) {
+    if (selectedAgent) {
       const conversation = mockConversations.find(
-        (c) => c.taskId === selectedTask.id
+        (c) => c.agentId === selectedAgent.id
       )
       setMessages(conversation ? conversation.messages : [])
     } else {
       setMessages([])
     }
-  }, [selectedTask, setMessages])
+  }, [selectedAgent, setMessages])
 
-  if (!selectedTask) {
+  if (!selectedAgent) {
     return (
       <div className="flex h-full flex-1 items-center justify-center">
         <div className="text-center p-4">
           <Heading size={2}>
-            No Task Selected
+            No Agent Selected
           </Heading>
           <Paragraph className="mt-2 text-muted-foreground">
-            Please select a task from the sidebar to view its details.
+            Please select an agent from the sidebar to start a conversation.
           </Paragraph>
         </div>
       </div>
@@ -41,16 +38,7 @@ export const TaskView = () => {
 
   return (
     <div className="flex h-screen flex-1 flex-col">
-      <header className="border-b p-4">
-        <Heading size={1}>
-          {selectedTask.title}
-        </Heading>
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <span>Agent: {selectedTask.agent.name}</span>
-          <span>Status: {selectedTask.status}</span>
-          <span>Last Updated: {dayjs(selectedTask.lastUpdatedAt).fromNow()}</span>
-        </div>
-      </header>
+      <StatusBar />
       <div className="flex-1 overflow-y-auto">
         <ChatArea />
       </div>

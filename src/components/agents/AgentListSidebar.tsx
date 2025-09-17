@@ -4,8 +4,8 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Icon from '@/components/ui/icon'
 import Heading from '@/components/ui/typography/Heading'
 import { useStore } from '@/store'
-import { mockTasks } from '@/lib/mock-data'
-import { Task } from '@/types/control-deck'
+import { mockAgents } from '@/lib/mock-data'
+import { Agent } from '@/types/control-deck'
 import { cn } from '@/lib/utils'
 
 const SidebarHeader = () => (
@@ -16,55 +16,75 @@ const SidebarHeader = () => (
   </div>
 )
 
-const TaskItem = ({
-  task,
+const specialtyColors: Record<string, string> = {
+  research: 'bg-blue-500',
+  summarization: 'bg-purple-500',
+  'prompt-generation': 'bg-green-500',
+  coding: 'bg-orange-500',
+  analysis: 'bg-pink-500',
+  'creative-writing': 'bg-yellow-500'
+}
+
+const specialtyIcons: Record<string, string> = {
+  research: 'search',
+  summarization: 'file-text',
+  'prompt-generation': 'sparkle',
+  coding: 'code',
+  analysis: 'chart-bar',
+  'creative-writing': 'pencil'
+}
+
+const AgentItem = ({
+  agent,
   isSelected
 }: {
-  task: Task
+  agent: Agent
   isSelected: boolean
 }) => {
-  const { setSelectedTask } = useStore()
-  const statusColors: { [key: string]: string } = {
-    pending: 'bg-yellow-500',
-    running: 'bg-blue-500',
-    completed: 'bg-green-500',
-    error: 'bg-red-500'
-  }
+  const { setSelectedAgent } = useStore()
 
   return (
     <div
-      onClick={() => setSelectedTask(task)}
+      onClick={() => setSelectedAgent(agent)}
       className={cn(
-        'flex cursor-pointer items-center gap-3 rounded-lg p-2 transition-colors',
+        'flex cursor-pointer items-center gap-3 rounded-lg p-3 transition-colors',
         isSelected ? 'bg-accent' : 'hover:bg-accent/50'
       )}
     >
       <div
-        className={cn('h-2 w-2 rounded-full', statusColors[task.status])}
-      />
+        className={cn(
+          'flex h-8 w-8 min-h-8 min-w-8 items-center justify-center rounded-full shrink-0',
+          specialtyColors[agent.specialty]
+        )}
+      >
+        <Icon
+          type={specialtyIcons[agent.specialty] as any}
+          size="xs"
+          className="text-white"
+        />
+      </div>
       <div className="flex-grow">
-        <p className="text-sm font-medium">{task.title}</p>
-        <p className="text-xs text-muted-foreground">{task.agent.name}</p>
+        <p className="text-sm font-medium">{agent.name}</p>
+        <p className="text-xs text-muted-foreground">{agent.description}</p>
       </div>
     </div>
   )
 }
 
-export const TaskListSidebar = () => {
+export const AgentListSidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
-  const [sidebarWidth, setSidebarWidth] = useState(320) // 20rem = 320px
+  const [sidebarWidth, setSidebarWidth] = useState(320)
   const [isResizing, setIsResizing] = useState(false)
   const sidebarRef = useRef<HTMLDivElement>(null)
-  const { tasks, setTasks, selectedTask } = useStore()
+  const { agents, setAgents, selectedAgent } = useStore()
   
   const MIN_WIDTH = 200
   const MAX_WIDTH = 600
-  const COLLAPSED_WIDTH = 53 // 3.3rem = 53px
+  const COLLAPSED_WIDTH = 53
 
   useEffect(() => {
-    // Load mock tasks into the store on component mount
-    setTasks(mockTasks)
-  }, [setTasks])
+    setAgents(mockAgents)
+  }, [setAgents])
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault()
@@ -103,12 +123,11 @@ export const TaskListSidebar = () => {
   return (
     <motion.aside
       ref={sidebarRef}
-      className="relative flex h-screen shrink-0 grow-0 flex-col overflow-y-auto border-r bg-background/50 p-2 font-dmmono"
+      className="relative flex h-screen shrink-0 grow-0 flex-col overflow-y-auto border-r bg-background/50 p-2 font-geist"
       initial={{ width: sidebarWidth }}
       animate={{ width: isCollapsed ? COLLAPSED_WIDTH : sidebarWidth }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
-      {/* Resize handle */}
       {!isCollapsed && (
         <div
           className="absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-primary/20 active:bg-primary/30"
@@ -135,16 +154,16 @@ export const TaskListSidebar = () => {
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         style={{
           pointerEvents: isCollapsed ? 'none' : 'auto',
-          width: isCollapsed ? 0 : sidebarWidth - 16 // subtract padding
+          width: isCollapsed ? 0 : sidebarWidth - 16
         }}
       >
         <SidebarHeader />
         <div className="flex flex-col gap-1">
-          {tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              isSelected={selectedTask?.id === task.id}
+          {agents.map((agent) => (
+            <AgentItem
+              key={agent.id}
+              agent={agent}
+              isSelected={selectedAgent?.id === agent.id}
             />
           ))}
         </div>

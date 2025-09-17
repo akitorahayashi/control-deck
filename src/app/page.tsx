@@ -1,14 +1,14 @@
 'use client'
-import { TaskListSidebar } from '@/components/tasks/TaskListSidebar'
-import { TaskView } from '@/components/tasks/TaskView'
+import { AgentListSidebar } from '@/components/agents/AgentListSidebar'
+import { AgentView } from '@/components/agents/AgentView'
 import { Suspense } from 'react'
 
 export default function Home() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="flex h-screen bg-background/80">
-        <TaskListSidebar />
-        <TaskView />
+        <AgentListSidebar />
+        <AgentView />
       </div>
     </Suspense>
   )

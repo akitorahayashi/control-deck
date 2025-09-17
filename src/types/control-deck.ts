@@ -1,19 +1,11 @@
+export type AgentSpecialty = 'research' | 'summarization' | 'prompt-generation' | 'coding' | 'analysis' | 'creative-writing'
+
 export interface Agent {
   id: string
   name: string
   description: string
+  specialty: AgentSpecialty
   avatarUrl?: string
-}
-
-export type TaskStatus = 'pending' | 'running' | 'completed' | 'error'
-
-export interface Task {
-  id: string
-  title: string
-  agent: Agent
-  status: TaskStatus
-  createdAt: string
-  lastUpdatedAt: string
 }
 
 export interface ChatMessage {
@@ -24,7 +16,7 @@ export interface ChatMessage {
   timestamp: string
 }
 
-export interface TaskConversation {
-  taskId: string
+export interface AgentConversation {
+  agentId: string
   messages: ChatMessage[]
 }
