@@ -68,7 +68,7 @@ export const TaskListSidebar = () => {
     >
       <motion.button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute right-0 top-2 z-10 p-2 text-muted border border-border hover:bg-muted/20 rounded-md transition-colors"
+        className="absolute right-0 top-2 z-10 p-2 text-muted hover:bg-muted/20 rounded-md transition-colors"
         aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         type="button"
         whileTap={{ scale: 0.95 }}
