@@ -75,7 +75,7 @@ export const TaskListSidebar = () => {
       >
         <Icon
           type="toggle-sidebar"
-          size="md"
+          size="sm"
           className={`transform transition-transform ${isCollapsed ? 'rotate-180' : 'rotate-0'}`}
         />
       </motion.button>
