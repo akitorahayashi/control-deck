@@ -31,7 +31,7 @@ const ChatInput = () => {
             handleSubmit()
           }
         }}
-        className="w-full border border-accent bg-primaryAccent px-4 text-sm text-primary focus:border-accent"
+        className="flex-1 border border-accent bg-primaryAccent px-4 text-sm text-primary focus:border-accent"
         disabled={!selectedTask}
         ref={chatInputRef}
       />
@@ -39,7 +39,7 @@ const ChatInput = () => {
         onClick={handleSubmit}
         disabled={!selectedTask || !inputMessage.trim()}
         size="icon"
-        className="rounded-xl bg-primary p-5 text-primaryAccent"
+        className="flex-shrink-0 rounded-xl bg-primary p-5 text-primaryAccent"
       >
         <Icon type="send" color="primaryAccent" />
       </Button>
