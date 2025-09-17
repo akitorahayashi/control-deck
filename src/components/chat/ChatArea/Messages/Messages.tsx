@@ -20,11 +20,11 @@ const Messages = ({ messages }: MessageListProps) => {
             className="flex flex-col items-center justify-center text-center font-geist py-8"
             aria-label="Agent information"
           >
-            <div className="flex max-w-3xl flex-col gap-y-4">
-              <Heading size={1} className="tracking-tight">
+            <div className="flex max-w-3xl flex-col gap-y-4 items-center">
+              <Heading size={1} className="tracking-tight text-center">
                 {selectedAgent.name}
               </Heading>
-              <Paragraph className="text-muted-foreground">
+              <Paragraph className="text-muted-foreground text-center">
                 {selectedAgent.description}
               </Paragraph>
             </div>
