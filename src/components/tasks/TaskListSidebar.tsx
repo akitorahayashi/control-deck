@@ -1,7 +1,8 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import Icon from '@/components/ui/icon'
+import Image from 'next/image'
+import toggleSidebarIcon from '@/assets/icons/toggle-sidebar.svg'
 import Heading from '@/components/ui/typography/Heading'
 import { useStore } from '@/store'
 import { mockTasks } from '@/lib/mock-data'
@@ -68,15 +69,17 @@ export const TaskListSidebar = () => {
     >
       <motion.button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute right-0 top-2 z-10 p-1"
+        className="absolute right-0 top-2 z-10 p-2 text-muted border border-border hover:bg-muted/20 rounded-md transition-colors"
         aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         type="button"
         whileTap={{ scale: 0.95 }}
       >
-        <Icon
-          type="sheet"
-          size="xs"
-          className={`transform ${isCollapsed ? 'rotate-180' : 'rotate-0'}`}
+        <Image
+          src={toggleSidebarIcon}
+          alt="Toggle sidebar"
+          width={24}
+          height={24}
+          className={`transform transition-transform ${isCollapsed ? 'rotate-180' : 'rotate-0'}`}
         />
       </motion.button>
       <motion.div
