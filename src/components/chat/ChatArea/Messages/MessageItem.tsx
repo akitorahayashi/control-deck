@@ -14,13 +14,8 @@ interface MessageProps {
 }
 
 const AgentMessage = ({ message }: MessageProps) => {
-  const agentIconType = message.agentId ? getAgentIcon(message.agentId) : 'agent'
-
   return (
-    <div className="flex flex-col items-start gap-2 font-geist">
-      <div className="flex-shrink-0">
-        <Icon type={agentIconType} size="xs" />
-      </div>
+    <div className="flex items-start gap-4 font-geist">
       <div className="text-md rounded-lg font-geist p-3 bg-background-secondary text-chat-text-agent max-w-xs">
         {message.content}
       </div>
