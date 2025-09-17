@@ -1,6 +1,7 @@
 import { Agent } from '@/types/agent'
-import { AgentConversation } from '@/types/chat'
+import { AgentConversation, ChatMessage } from '@/types/chat'
 import dayjs from 'dayjs'
+import { useStore } from '@/store'
 
 // Mock Agents
 export const mockAgents: Agent[] = [
@@ -57,7 +58,7 @@ export const mockConversations: AgentConversation[] = [
         id: 'msg-1-2',
         role: 'agent',
         agentId: 'agent-001',
-        content: 'I\'ll help you research the latest AI trends. Let me gather comprehensive information about the most significant developments in AI for 2024.',
+        content: "I'll help you research the latest AI trends. Let me gather comprehensive information about the most significant developments in AI for 2024.",
         timestamp: dayjs().subtract(50, 'minute').toISOString()
       }
     ]
@@ -83,7 +84,7 @@ export const mockConversations: AgentConversation[] = [
         id: 'msg-4-2',
         role: 'agent',
         agentId: 'agent-004',
-        content: 'I\'ll create a clean, modern React login component for you. Let me build that with proper form validation and styling.',
+        content: "I'll create a clean, modern React login component for you. Let me build that with proper form validation and styling.",
         timestamp: dayjs().subtract(1, 'hour').toISOString()
       }
     ]
@@ -97,3 +98,54 @@ export const mockConversations: AgentConversation[] = [
     messages: []
   }
 ]
+
+export const mockStreamingResponse = (userInput: string) => {
+  const { selectedAgent, addMessage, updateMessageContent, setIsStreaming } = useStore.getState()
+
+  if (!selectedAgent) return
+
+  const userMessage: ChatMessage = {
+    id: `msg-${Date.now()}`,
+    role: 'user',
+    content: userInput,
+    timestamp: dayjs().toISOString(),
+  }
+  addMessage(userMessage)
+
+  const agentMessageId = `msg-${Date.now() + 1}`
+  const agentMessage: ChatMessage = {
+    id: agentMessageId,
+    role: 'agent',
+    agentId: selectedAgent.id,
+    content: '',
+    timestamp: dayjs().toISOString(),
+  }
+  addMessage(agentMessage)
+  setIsStreaming(true)
+
+  const responseChunks = [
+    'Of course! ',
+    `I can certainly help you with '${userInput}'. `,
+    'As the ',
+    `'${selectedAgent.name}', `,
+    'my specialty is ',
+    `'${selectedAgent.specialty}'. `,
+    'Let me start by gathering the necessary information. ',
+    'This might take a moment... ',
+    'Okay, I have a few ideas. ',
+    'First, we could approach this by... ',
+    'Another option would be to... ',
+    'Let me know how you\'d like to proceed!',
+  ]
+
+  let chunkIndex = 0
+  const interval = setInterval(() => {
+    if (chunkIndex < responseChunks.length) {
+      updateMessageContent(agentMessageId, responseChunks[chunkIndex])
+      chunkIndex++
+    } else {
+      clearInterval(interval)
+      setIsStreaming(false)
+    }
+  }, 150)
+}

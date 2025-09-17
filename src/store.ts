@@ -9,19 +9,29 @@ interface Store {
   selectedAgent: Agent | null
   setSelectedAgent: (agent: Agent | null) => void
   messages: ChatMessage[]
-  setMessages: (messages: ChatMessage[]) => void,
-  isStreaming: boolean,
-  setIsStreaming: (isStreaming: boolean) => void,
+  setMessages: (messages: ChatMessage[]) => void
+  addMessage: (message: ChatMessage) => void
+  updateMessageContent: (id: string, newContent: string) => void
+  isStreaming: boolean
+  setIsStreaming: (isStreaming: boolean) => void
   chatInputRef: RefObject<HTMLTextAreaElement | null>
 }
 
-export const useStore = create<Store>()((set) => ({
+export const useStore = create<Store>()((set, get) => ({
   agents: [],
   setAgents: (agents) => set({ agents }),
   selectedAgent: null,
   setSelectedAgent: (agent) => set({ selectedAgent: agent }),
   messages: [],
   setMessages: (messages) => set({ messages }),
+  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
+  updateMessageContent: (id, newContent) => {
+    set((state) => ({
+      messages: state.messages.map((msg) =>
+        msg.id === id ? { ...msg, content: msg.content + newContent } : msg
+      ),
+    }))
+  },
   isStreaming: false,
   setIsStreaming: (isStreaming) => set({ isStreaming }),
   chatInputRef: createRef<HTMLTextAreaElement>(),
