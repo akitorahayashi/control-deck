@@ -3,7 +3,13 @@ import { useStore } from '@/store'
 import dayjs from 'dayjs'
 
 export const mockStreamingResponse = (userInput: string) => {
-  const { selectedAgent, addMessage, updateMessageContent, updateMessageThinking, setIsStreaming } = useStore.getState()
+  const {
+    selectedAgent,
+    addMessage,
+    updateMessageContent,
+    updateMessageThinking,
+    setIsStreaming
+  } = useStore.getState()
 
   if (!selectedAgent) return
 
@@ -11,7 +17,7 @@ export const mockStreamingResponse = (userInput: string) => {
     id: `msg-${Date.now()}`,
     role: 'user',
     content: userInput,
-    timestamp: dayjs().toISOString(),
+    timestamp: dayjs().toISOString()
   }
   addMessage(userMessage)
 
@@ -22,7 +28,7 @@ export const mockStreamingResponse = (userInput: string) => {
     agentId: selectedAgent.id,
     content: '',
     thinking: '',
-    timestamp: dayjs().toISOString(),
+    timestamp: dayjs().toISOString()
   }
   addMessage(agentMessage)
   setIsStreaming(true)
@@ -36,7 +42,7 @@ export const mockStreamingResponse = (userInput: string) => {
     ', my specialty is ',
     selectedAgent.specialty,
     '. I should leverage this expertise. ',
-    'First, I need to analyze what they\'re asking for. ',
+    "First, I need to analyze what they're asking for. ",
     'I should provide a comprehensive and helpful response. ',
     'Let me structure my thoughts and provide the best solution.'
   ]
@@ -53,7 +59,7 @@ export const mockStreamingResponse = (userInput: string) => {
     'Okay, I have a few ideas. ',
     'First, we could approach this by... ',
     'Another option would be to... ',
-    'Let me know how you\'d like to proceed!',
+    "Let me know how you'd like to proceed!"
   ]
 
   // First stream thinking

@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useState, useEffect, useRef, useCallback } from 'react'
-import Icon from '@/components/ui/icon'
+import Icon, { IconType } from '@/components/ui/icon'
 import Heading from '@/components/ui/typography/Heading'
 import { useStore } from '@/store'
 import { mockAgents } from '@/lib/mocks'
@@ -10,9 +10,7 @@ import { cn } from '@/lib/utils'
 
 const SidebarHeader = () => (
   <div className="flex items-center gap-2 p-2">
-    <Heading size={2}>
-      Control Deck
-    </Heading>
+    <Heading size={2}>Control Deck</Heading>
   </div>
 )
 
@@ -53,19 +51,19 @@ const AgentItem = ({
     >
       <div
         className={cn(
-          'flex h-8 w-8 min-h-8 min-w-8 items-center justify-center rounded-full shrink-0',
+          'flex h-8 min-h-8 w-8 min-w-8 shrink-0 items-center justify-center rounded-full',
           specialtyColors[agent.specialty]
         )}
       >
         <Icon
-          type={specialtyIcons[agent.specialty] as any}
+          type={specialtyIcons[agent.specialty] as IconType}
           size="xs"
           className="text-white"
         />
       </div>
       <div className="flex-grow">
         <p className="text-sm font-medium">{agent.name}</p>
-        <p className="text-xs text-muted-foreground">{agent.description}</p>
+        <p className="text-muted-foreground text-xs">{agent.description}</p>
       </div>
     </div>
   )
@@ -136,7 +134,7 @@ export const AgentListSidebar = () => {
       )}
       <motion.button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute right-1.5 top-3.5 z-10 p-2 text-muted hover:bg-muted/20 rounded-md transition-colors"
+        className="absolute right-1.5 top-3.5 z-10 rounded-md p-2 text-muted transition-colors hover:bg-muted/20"
         aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         type="button"
         whileTap={{ scale: 0.95 }}

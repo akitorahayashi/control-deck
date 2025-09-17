@@ -1,7 +1,10 @@
 import { memo } from 'react'
-
-import { type ImageData } from '@/types/os'
 import { cn } from '@/lib/utils'
+
+interface ImageData {
+  url: string
+  revised_prompt?: string
+}
 
 const Images = ({ images }: { images: ImageData[] }) => (
   <div

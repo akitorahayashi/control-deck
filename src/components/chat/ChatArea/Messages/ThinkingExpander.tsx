@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Icon from '@/components/ui/icon'
 
 const thinkingAnimation = {
-  animation: 'thinking 1.2s ease-in-out infinite',
+  animation: 'thinking 1.2s ease-in-out infinite'
 }
 
 const thinkingKeyframes = `
@@ -17,7 +17,11 @@ interface ThinkingExpanderProps {
   isStreamingThinking?: boolean
 }
 
-const ThinkingExpander = ({ thinking, content, isStreamingThinking = false }: ThinkingExpanderProps) => {
+const ThinkingExpander = ({
+  thinking,
+  content,
+  isStreamingThinking = false
+}: ThinkingExpanderProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   if (!thinking && !isStreamingThinking) {
@@ -37,21 +41,21 @@ const ThinkingExpander = ({ thinking, content, isStreamingThinking = false }: Th
         >
           <span style={isThinking ? thinkingAnimation : {}}>{buttonText}</span>
           <Icon
-            type={isExpanded ? "chevron-up" : "chevron-down"}
-            className="w-4 h-4 ml-auto"
+            type={isExpanded ? 'chevron-up' : 'chevron-down'}
+            className="ml-auto h-4 w-4"
           />
         </button>
 
-      {isExpanded && (
-        <div className="mt-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <div className="text-sm text-gray-600 whitespace-pre-wrap">
-            {thinking}
-            {isStreamingThinking && (
-              <span className="inline-block w-2 h-4 bg-gray-400 ml-1 animate-pulse" />
-            )}
+        {isExpanded && (
+          <div className="mt-2 rounded-lg border border-gray-200 bg-gray-50 p-3">
+            <div className="whitespace-pre-wrap text-sm text-gray-600">
+              {thinking}
+              {isStreamingThinking && (
+                <span className="ml-1 inline-block h-4 w-2 animate-pulse bg-gray-400" />
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </>
   )

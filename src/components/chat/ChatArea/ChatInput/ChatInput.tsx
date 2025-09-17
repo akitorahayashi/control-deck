@@ -33,7 +33,7 @@ const ChatInput = () => {
             handleSubmit()
           }
         }}
-        className="flex-1 resize-none !border-0 !bg-transparent text-sm text-gray-900 placeholder-gray-500 !focus:outline-none !focus:ring-0 !outline-none !shadow-none !rounded-none px-3 py-2"
+        className="!focus:outline-none !focus:ring-0 flex-1 resize-none !rounded-none !border-0 !bg-transparent px-3 py-2 text-sm text-gray-900 placeholder-gray-500 !shadow-none !outline-none"
         disabled={!selectedAgent || isStreaming}
         ref={chatInputRef}
       />

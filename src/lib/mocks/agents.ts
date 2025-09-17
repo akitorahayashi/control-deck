@@ -4,7 +4,8 @@ export const mockAgents: Agent[] = [
   {
     id: 'agent-001',
     name: 'Research Pro',
-    description: 'Specialized in deep research, fact-checking, and information synthesis',
+    description:
+      'Specialized in deep research, fact-checking, and information synthesis',
     specialty: 'research'
   },
   {

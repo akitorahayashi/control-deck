@@ -18,29 +18,32 @@ interface Store {
   chatInputRef: RefObject<HTMLTextAreaElement | null>
 }
 
-export const useStore = create<Store>()((set, get) => ({
+export const useStore = create<Store>()((set) => ({
   agents: [],
   setAgents: (agents) => set({ agents }),
   selectedAgent: null,
   setSelectedAgent: (agent) => set({ selectedAgent: agent }),
   messages: [],
   setMessages: (messages) => set({ messages }),
-  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
+  addMessage: (message) =>
+    set((state) => ({ messages: [...state.messages, message] })),
   updateMessageContent: (id, newContent) => {
     set((state) => ({
       messages: state.messages.map((msg) =>
         msg.id === id ? { ...msg, content: msg.content + newContent } : msg
-      ),
+      )
     }))
   },
   updateMessageThinking: (id, newThinking) => {
     set((state) => ({
       messages: state.messages.map((msg) =>
-        msg.id === id ? { ...msg, thinking: (msg.thinking || '') + newThinking } : msg
-      ),
+        msg.id === id
+          ? { ...msg, thinking: (msg.thinking || '') + newThinking }
+          : msg
+      )
     }))
   },
   isStreaming: false,
   setIsStreaming: (isStreaming) => set({ isStreaming }),
-  chatInputRef: createRef<HTMLTextAreaElement>(),
+  chatInputRef: createRef<HTMLTextAreaElement>()
 }))

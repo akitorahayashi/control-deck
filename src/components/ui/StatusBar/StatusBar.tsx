@@ -15,7 +15,9 @@ export const StatusBar = ({ className, onChatReset }: StatusBarProps) => {
   }
 
   return (
-    <div className={`flex items-center justify-between px-4 py-2 border-b bg-background/50 ${className}`}>
+    <div
+      className={`flex items-center justify-between border-b bg-background/50 px-4 py-2 ${className}`}
+    >
       <div className="flex items-center">
         <ChatResetButton onReset={onChatReset} />
       </div>
@@ -28,8 +30,8 @@ export const StatusBar = ({ className, onChatReset }: StatusBarProps) => {
         >
           <Icon type="settings" size="xs" />
         </Button>
-        <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-          <span className="text-white text-sm font-medium">U</span>
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
+          <span className="text-sm font-medium text-white">U</span>
         </div>
       </div>
     </div>

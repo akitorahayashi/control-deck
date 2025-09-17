@@ -8,7 +8,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/ui/dialog'
 import { Sparkles } from 'lucide-react'
 
@@ -17,7 +17,10 @@ interface ChatResetButtonProps {
   className?: string
 }
 
-export const ChatResetButton = ({ onReset, className }: ChatResetButtonProps) => {
+export const ChatResetButton = ({
+  onReset,
+  className
+}: ChatResetButtonProps) => {
   const [open, setOpen] = useState(false)
 
   const handleConfirmReset = () => {
@@ -40,12 +43,14 @@ export const ChatResetButton = ({ onReset, className }: ChatResetButtonProps) =>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader className="text-center space-y-4">
+        <DialogHeader className="space-y-4 text-center">
           <DialogTitle className="text-xl font-semibold">
             チャットをリセットしますか？
           </DialogTitle>
-          <DialogDescription className="text-gray-600 leading-relaxed">
-            現在のチャット履歴がすべて削除され、<br />新しいチャットが開始されます。
+          <DialogDescription className="leading-relaxed text-gray-600">
+            現在のチャット履歴がすべて削除され、
+            <br />
+            新しいチャットが開始されます。
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-3 pt-6">
@@ -58,7 +63,7 @@ export const ChatResetButton = ({ onReset, className }: ChatResetButtonProps) =>
           </Button>
           <Button
             onClick={handleConfirmReset}
-            className="flex-1 bg-red-500 hover:bg-red-600 text-white"
+            className="flex-1 bg-red-500 text-white hover:bg-red-600"
           >
             リセット
           </Button>

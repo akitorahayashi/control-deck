@@ -1,8 +1,4 @@
 import { IconTypeMap } from './types'
-import UserIconSvg from './custom-icons/UserIcon.svg'
-import AgentIconSvg from './custom-icons/AgentIcon.svg'
-import ReasoningIconSvg from './custom-icons/ReasoningIcon.svg'
-import ReferencesIconSvg from './custom-icons/ReferencesIcon.svg'
 import {
   RefreshCw,
   Edit,
@@ -29,9 +25,6 @@ import {
 import { PlusIcon } from '@radix-ui/react-icons'
 
 export const ICONS: IconTypeMap = {
-  user: UserIconSvg,
-  agent: AgentIconSvg,
-  reasoning: ReasoningIconSvg,
   refresh: RefreshCw,
   edit: Edit,
   save: Save,
@@ -44,7 +37,6 @@ export const ICONS: IconTypeMap = {
   'chevron-down': ChevronDown,
   'chevron-up': ChevronUp,
   'plus-icon': PlusIcon,
-  references: ReferencesIconSvg,
   trash: Trash,
   'toggle-sidebar': PanelLeftClose,
   search: Search,
