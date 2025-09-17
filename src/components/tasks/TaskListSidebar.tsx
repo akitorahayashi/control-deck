@@ -63,12 +63,12 @@ export const TaskListSidebar = () => {
     <motion.aside
       className="relative flex h-screen shrink-0 grow-0 flex-col overflow-y-auto border-r bg-background/50 p-2 font-dmmono"
       initial={{ width: '20rem' }}
-      animate={{ width: isCollapsed ? '2.5rem' : '20rem' }}
+      animate={{ width: isCollapsed ? '3.3rem' : '20rem' }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
       <motion.button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute right-0 top-2 z-10 p-2 text-muted hover:bg-muted/20 rounded-md transition-colors"
+        className="absolute right-1.5 top-3.5 z-10 p-2 text-muted hover:bg-muted/20 rounded-md transition-colors"
         aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         type="button"
         whileTap={{ scale: 0.95 }}
