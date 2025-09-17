@@ -1,19 +1,24 @@
 'use client'
 import Icon from '@/components/ui/icon'
 import { Button } from '@/components/ui/button'
+import { ChatResetButton } from './ChatResetButton'
 
 interface StatusBarProps {
   className?: string
+  onChatReset?: () => void
 }
 
-export const StatusBar = ({ className }: StatusBarProps) => {
+export const StatusBar = ({ className, onChatReset }: StatusBarProps) => {
   const handleSettingsClick = () => {
     // 未実装
     console.log('Settings clicked')
   }
 
   return (
-    <div className={`flex items-center justify-end px-4 py-2 border-b bg-background/50 ${className}`}>
+    <div className={`flex items-center justify-between px-4 py-2 border-b bg-background/50 ${className}`}>
+      <div className="flex items-center">
+        <ChatResetButton onReset={onChatReset} />
+      </div>
       <div className="flex items-center gap-2">
         <Button
           variant="ghost"

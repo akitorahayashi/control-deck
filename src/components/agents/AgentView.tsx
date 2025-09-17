@@ -21,6 +21,10 @@ export const AgentView = () => {
     }
   }, [selectedAgent, setMessages])
 
+  const handleChatReset = () => {
+    setMessages([])
+  }
+
   if (!selectedAgent) {
     return (
       <div className="flex h-full flex-1 items-center justify-center">
@@ -38,7 +42,7 @@ export const AgentView = () => {
 
   return (
     <div className="flex h-screen flex-1 flex-col">
-      <StatusBar />
+      <StatusBar onChatReset={handleChatReset} />
       <div className="flex-1 overflow-y-auto">
         <ChatArea />
       </div>
