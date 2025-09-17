@@ -1,14 +1,12 @@
-import {
-  UserIcon,
-  AgentIcon,
-  SheetIcon,
-  NextjsTag,
-  ShadcnTag,
-  TailwindTag,
-  ReasoningIcon,
-  ReferencesIcon
-} from './custom-icons'
 import { IconTypeMap } from './types'
+import UserIconSvg from './custom-icons/UserIcon.svg'
+import AgentIconSvg from './custom-icons/AgentIcon.svg'
+import NextjsTagSvg from './custom-icons/NextjsTag.svg'
+import ShadcnTagSvg from './custom-icons/ShadcnTag.svg'
+import TailwindTagSvg from './custom-icons/TailwindTag.svg'
+import ReasoningIconSvg from './custom-icons/ReasoningIcon.svg'
+import ReferencesIconSvg from './custom-icons/ReferencesIcon.svg'
+import ToggleSidebarSvg from './custom-icons/ToggleSidebar.svg'
 import {
   RefreshCw,
   Edit,
@@ -27,13 +25,12 @@ import {
 import { PlusIcon } from '@radix-ui/react-icons'
 
 export const ICONS: IconTypeMap = {
-  user: UserIcon,
-  agent: AgentIcon,
-  sheet: SheetIcon,
-  nextjs: NextjsTag,
-  shadcn: ShadcnTag,
-  tailwind: TailwindTag,
-  reasoning: ReasoningIcon,
+  user: UserIconSvg,
+  agent: AgentIconSvg,
+  nextjs: NextjsTagSvg,
+  shadcn: ShadcnTagSvg,
+  tailwind: TailwindTagSvg,
+  reasoning: ReasoningIconSvg,
   refresh: RefreshCw,
   edit: Edit,
   save: Save,
@@ -46,6 +43,7 @@ export const ICONS: IconTypeMap = {
   'chevron-down': ChevronDown,
   'chevron-up': ChevronUp,
   'plus-icon': PlusIcon,
-  references: ReferencesIcon,
-  trash: Trash
+  references: ReferencesIconSvg,
+  trash: Trash,
+  'toggle-sidebar': ToggleSidebarSvg
 }

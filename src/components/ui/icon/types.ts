@@ -3,7 +3,6 @@ import { type ElementType } from 'react'
 export type IconType =
   | 'user'
   | 'agent'
-  | 'sheet'
   | 'nextjs'
   | 'shadcn'
   | 'tailwind'
@@ -22,6 +21,7 @@ export type IconType =
   | 'plus-icon'
   | 'references'
   | 'trash'
+  | 'toggle-sidebar'
 
 export interface IconProps {
   type: IconType

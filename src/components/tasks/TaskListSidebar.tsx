@@ -1,8 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import toggleSidebarIcon from '@/assets/icons/toggle-sidebar.svg'
+import Icon from '@/components/ui/icon'
 import Heading from '@/components/ui/typography/Heading'
 import { useStore } from '@/store'
 import { mockTasks } from '@/lib/mock-data'
@@ -74,11 +73,9 @@ export const TaskListSidebar = () => {
         type="button"
         whileTap={{ scale: 0.95 }}
       >
-        <Image
-          src={toggleSidebarIcon}
-          alt="Toggle sidebar"
-          width={24}
-          height={24}
+        <Icon
+          type="toggle-sidebar"
+          size="sm"
           className={`transform transition-transform ${isCollapsed ? 'rotate-180' : 'rotate-0'}`}
         />
       </motion.button>
