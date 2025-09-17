@@ -27,7 +27,7 @@ export const TaskView = () => {
   if (!selectedTask) {
     return (
       <div className="flex h-full flex-1 items-center justify-center">
-        <div className="text-center">
+        <div className="text-center p-4">
           <Heading size={2}>
             No Task Selected
           </Heading>
