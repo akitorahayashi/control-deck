@@ -3,7 +3,6 @@ import MarkdownRenderer from '@/components/ui/typography/MarkdownRenderer'
 import { useStore } from '@/store'
 import type { ChatMessage } from '@/types/control-deck'
 import { getAgentIcon } from '@/lib/agentIcons'
-import { getAgentName } from '@/lib/agentUtils'
 import Videos from './Multimedia/Videos'
 import Images from './Multimedia/Images'
 import Audios from './Multimedia/Audios'
@@ -15,82 +14,24 @@ interface MessageProps {
 }
 
 const AgentMessage = ({ message }: MessageProps) => {
-  const { streamingErrorMessage } = useStore()
-  let messageContent
-  if (message.streamingError) {
-    messageContent = (
-      <p className="text-destructive">
-        Oops! Something went wrong while streaming.{' '}
-        {streamingErrorMessage ? (
-          <>{streamingErrorMessage}</>
-        ) : (
-          'Please try refreshing the page or try again later.'
-        )}
-      </p>
-    )
-  } else if (message.content) {
-    messageContent = (
-      <div className="flex w-full flex-col gap-4">
-        <MarkdownRenderer>{message.content}</MarkdownRenderer>
-        {message.videos && message.videos.length > 0 && (
-          <Videos videos={message.videos} />
-        )}
-        {message.images && message.images.length > 0 && (
-          <Images images={message.images} />
-        )}
-        {message.audio && message.audio.length > 0 && (
-          <Audios audio={message.audio} />
-        )}
-      </div>
-    )
-  } else if (message.response_audio) {
-    if (!message.response_audio.transcript) {
-      messageContent = (
-        <div className="mt-2 flex items-start">
-          <AgentThinkingLoader />
-        </div>
-      )
-    } else {
-      messageContent = (
-        <div className="flex w-full flex-col gap-4">
-          <MarkdownRenderer>
-            {message.response_audio.transcript}
-          </MarkdownRenderer>
-          {message.response_audio.content && message.response_audio && (
-            <Audios audio={[message.response_audio]} />
-          )}
-        </div>
-      )
-    }
-  } else {
-    messageContent = (
-      <div className="mt-2">
-        <AgentThinkingLoader />
-      </div>
-    )
-  }
-
   const agentIconType = message.agentId ? getAgentIcon(message.agentId) : 'agent'
-  const agentName = message.agentId ? getAgentName(message.agentId) : 'Agent'
-  
+
   return (
-    <div className="flex flex-row items-start gap-4 font-geist">
-      <div className="flex flex-col items-center gap-1 flex-shrink-0">
-        <Icon type={agentIconType} size="sm" />
-        <span className="text-xs text-muted-foreground">{agentName}</span>
+    <div className="flex flex-col items-start gap-2 font-geist">
+      <div className="flex-shrink-0">
+        <Icon type={agentIconType} size="xs" />
       </div>
-      {messageContent}
+      <div className="text-md rounded-lg font-geist p-3 bg-background-secondary text-chat-text-agent max-w-xs">
+        {message.content}
+      </div>
     </div>
   )
 }
 
 const UserMessage = memo(({ message }: MessageProps) => {
   return (
-    <div className="flex items-start gap-4 pt-4 text-start max-md:break-words">
-      <div className="flex-shrink-0">
-        <Icon type="user" size="sm" />
-      </div>
-      <div className="text-md rounded-lg font-geist text-secondary">
+    <div className="flex justify-end">
+      <div className="text-md rounded-lg font-geist p-3 bg-chat-bubble-user text-chat-text-user max-w-xs">
         {message.content}
       </div>
     </div>

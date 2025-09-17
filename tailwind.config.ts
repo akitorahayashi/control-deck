@@ -23,7 +23,14 @@ export default {
         accent: '#E2E8F0',
         muted: '#475569',
         destructive: '#EF4444',
-        positive: '#10B981'
+        positive: '#10B981',
+        'chat-bubble': {
+          user: '#E3F2FD'
+        },
+        'chat-text': {
+          user: '#000000',
+          agent: '#000000'
+        }
       },
       fontFamily: {
         geist: 'var(--font-geist-sans)',
