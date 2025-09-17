@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Icon from '@/components/ui/icon'
 import Heading from '@/components/ui/typography/Heading'
 import { useStore } from '@/store'
-import { mockAgents } from '@/lib/mock-data'
+import { mockAgents } from '@/lib/mocks'
 import { Agent } from '@/types/agent'
 import { cn } from '@/lib/utils'
 

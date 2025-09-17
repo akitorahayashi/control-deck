@@ -12,6 +12,7 @@ interface Store {
   setMessages: (messages: ChatMessage[]) => void
   addMessage: (message: ChatMessage) => void
   updateMessageContent: (id: string, newContent: string) => void
+  updateMessageThinking: (id: string, newThinking: string) => void
   isStreaming: boolean
   setIsStreaming: (isStreaming: boolean) => void
   chatInputRef: RefObject<HTMLTextAreaElement | null>
@@ -29,6 +30,13 @@ export const useStore = create<Store>()((set, get) => ({
     set((state) => ({
       messages: state.messages.map((msg) =>
         msg.id === id ? { ...msg, content: msg.content + newContent } : msg
+      ),
+    }))
+  },
+  updateMessageThinking: (id, newThinking) => {
+    set((state) => ({
+      messages: state.messages.map((msg) =>
+        msg.id === id ? { ...msg, thinking: (msg.thinking || '') + newThinking } : msg
       ),
     }))
   },

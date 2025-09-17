@@ -1,7 +1,7 @@
 'use client'
 import { useStore } from '@/store'
 import { ChatArea } from '@/components/chat/ChatArea'
-import { mockConversations } from '@/lib/mock-data'
+import { mockConversations } from '@/lib/mocks'
 import { useEffect } from 'react'
 import Heading from '../ui/typography/Heading'
 import Paragraph from '../ui/typography/Paragraph'

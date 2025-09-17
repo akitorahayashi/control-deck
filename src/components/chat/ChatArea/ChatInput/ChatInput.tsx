@@ -4,7 +4,7 @@ import { TextArea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { useStore } from '@/store'
 import Icon from '@/components/ui/icon'
-import { mockStreamingResponse } from '@/lib/mock-data'
+import { mockStreamingResponse } from '@/lib/mocks'
 
 const ChatInput = () => {
   const { chatInputRef, selectedAgent, isStreaming } = useStore()

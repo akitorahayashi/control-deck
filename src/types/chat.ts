@@ -3,6 +3,7 @@ export interface ChatMessage {
     role: 'user' | 'agent'
     agentId?: string
     content: string
+    thinking?: string
     timestamp: string
 }
 
