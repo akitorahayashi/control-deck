@@ -1,9 +1,6 @@
 import { type ElementType } from 'react'
 
 export type IconType =
-  | 'user'
-  | 'agent'
-  | 'reasoning'
   | 'refresh'
   | 'edit'
   | 'save'
@@ -16,7 +13,6 @@ export type IconType =
   | 'chevron-down'
   | 'chevron-up'
   | 'plus-icon'
-  | 'references'
   | 'trash'
   | 'toggle-sidebar'
   | 'search'

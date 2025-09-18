@@ -17,11 +17,11 @@ const Messages = ({ messages }: MessageListProps) => {
       {selectedAgent && (
         <>
           <section
-            className="flex flex-col items-center justify-center text-center font-geist py-8"
+            className="flex flex-col items-center justify-center py-8 text-center font-geist"
             aria-label="Agent information"
           >
-            <div className="flex max-w-3xl flex-col gap-y-4 items-center">
-              <Heading size={1} className="tracking-tight text-center">
+            <div className="flex max-w-3xl flex-col items-center gap-y-4">
+              <Heading size={1} className="text-center tracking-tight">
                 {selectedAgent.name}
               </Heading>
               <Paragraph className="text-muted-foreground text-center">
@@ -30,7 +30,7 @@ const Messages = ({ messages }: MessageListProps) => {
             </div>
           </section>
           {messages.length > 0 && (
-            <div className="border-t border-border/50 mx-8" />
+            <div className="mx-8 border-t border-border/50" />
           )}
         </>
       )}

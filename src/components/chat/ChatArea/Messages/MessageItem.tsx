@@ -1,13 +1,6 @@
-import Icon from '@/components/ui/icon'
-import MarkdownRenderer from '@/components/ui/typography/MarkdownRenderer'
-import { useStore } from '@/store'
 import type { ChatMessage } from '@/types/chat'
-import { getAgentIcon } from '@/lib/agentIcons'
-import Videos from './Multimedia/Videos'
-import Images from './Multimedia/Images'
-import Audios from './Multimedia/Audios'
 import { memo } from 'react'
-import AgentThinkingLoader from './AgentThinkingLoader'
+import ThinkingExpander from './ThinkingExpander'
 
 interface MessageProps {
   message: ChatMessage
@@ -16,8 +9,16 @@ interface MessageProps {
 const AgentMessage = ({ message }: MessageProps) => {
   return (
     <div className="flex items-start gap-4 font-geist">
-      <div className="text-md rounded-lg font-geist p-3 bg-background-secondary text-chat-text-agent max-w-xs">
-        {message.content}
+      <div className="flex max-w-xs flex-col">
+        <ThinkingExpander
+          thinking={message.thinking || ''}
+          content={message.content}
+        />
+        {message.content && (
+          <div className="text-md rounded-lg bg-background-secondary p-3 font-geist text-chat-text-agent">
+            {message.content}
+          </div>
+        )}
       </div>
     </div>
   )
@@ -26,7 +27,7 @@ const AgentMessage = ({ message }: MessageProps) => {
 const UserMessage = memo(({ message }: MessageProps) => {
   return (
     <div className="flex justify-end">
-      <div className="text-md rounded-lg font-geist p-3 bg-chat-bubble-user text-chat-text-user max-w-xs">
+      <div className="text-md max-w-xs rounded-lg bg-chat-bubble-user p-3 font-geist text-chat-text-user">
         {message.content}
       </div>
     </div>

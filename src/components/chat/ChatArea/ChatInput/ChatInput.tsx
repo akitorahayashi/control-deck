@@ -4,15 +4,17 @@ import { TextArea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { useStore } from '@/store'
 import Icon from '@/components/ui/icon'
+import { mockStreamingResponse } from '@/lib/mocks'
 
 const ChatInput = () => {
-  const { chatInputRef, selectedAgent } = useStore()
+  const { chatInputRef, selectedAgent, isStreaming } = useStore()
   const [inputMessage, setInputMessage] = useState('')
 
   const handleSubmit = async () => {
-    // This is a no-op for now as the chat is not interactive.
-    // In the future, this would send the message to the backend.
-    console.log('Sending message:', inputMessage)
+    if (!inputMessage.trim() || !selectedAgent || isStreaming) return
+
+    mockStreamingResponse(inputMessage)
+    setInputMessage('')
   }
 
   return (
@@ -31,13 +33,13 @@ const ChatInput = () => {
             handleSubmit()
           }
         }}
-        className="flex-1 resize-none !border-0 !bg-transparent text-sm text-gray-900 placeholder-gray-500 !focus:outline-none !focus:ring-0 !outline-none !shadow-none !rounded-none px-3 py-2"
-        disabled={!selectedAgent}
+        className="!focus:outline-none !focus:ring-0 flex-1 resize-none !rounded-none !border-0 !bg-transparent px-3 py-2 text-sm text-gray-900 placeholder-gray-500 !shadow-none !outline-none"
+        disabled={!selectedAgent || isStreaming}
         ref={chatInputRef}
       />
       <Button
         onClick={handleSubmit}
-        disabled={!selectedAgent || !inputMessage.trim()}
+        disabled={!selectedAgent || !inputMessage.trim() || isStreaming}
         size="icon"
         className="flex-shrink-0 rounded-full bg-black p-2 text-white hover:bg-gray-800 disabled:bg-gray-400"
       >

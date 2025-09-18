@@ -20,13 +20,13 @@ const Icon: FC<IconProps> = ({
         color && !disabled ? `text-${color}` : 'text-primary',
         disabled && 'cursor-default text-muted/50',
         className,
-        size === 'xxs' && 'w-3 h-3',
-        size === 'xs' && 'w-4 h-4',
-        size === 'sm' && 'w-6 h-6',
-        size === 'md' && 'w-9 h-9',
-        size === 'lg' && 'w-7 h-7',
-        size === 'dot' && 'w-2 h-2',
-        size === 'default' && 'w-6 h-6'
+        size === 'xxs' && 'h-3 w-3',
+        size === 'xs' && 'h-4 w-4',
+        size === 'sm' && 'h-6 w-6',
+        size === 'md' && 'h-9 w-9',
+        size === 'lg' && 'h-7 w-7',
+        size === 'dot' && 'h-2 w-2',
+        size === 'default' && 'h-6 w-6'
       )}
     />
   )
