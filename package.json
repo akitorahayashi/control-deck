@@ -1,6 +1,6 @@
 {
   "name": "control-deck",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
@@ -11,7 +11,8 @@
     "format": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "format:fix": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "typecheck": "tsc --noEmit",
-    "validate": "pnpm run lint && pnpm run format && pnpm run typecheck"
+    "validate": "pnpm run lint && pnpm run format && pnpm run typecheck",
+    "clean": "rm -rf .next node_modules dev_server.log"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.5",
