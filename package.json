@@ -14,7 +14,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "unit-test": "vitest run tests/unit",
-    "build-test": "next build",
+    "build-test": "next build && docker build -t control-deck:build-test . && docker image rm control-deck:build-test",
     "clean": "rm -rf .next node_modules dev_server.log coverage dist"
   },
   "dependencies": {
