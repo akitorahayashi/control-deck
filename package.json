@@ -12,7 +12,12 @@
     "format:fix": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "typecheck": "tsc --noEmit",
     "validate": "pnpm run lint && pnpm run format && pnpm run typecheck",
-    "clean": "rm -rf .next node_modules dev_server.log"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "unit-test": "vitest run tests/unit",
+    "build-test": "next build",
+    "clean": "rm -rf .next node_modules dev_server.log coverage dist"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.5",
@@ -46,11 +51,14 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^2.1.8",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
+    "jsdom": "^27.0.0",
     "postcss": "^8",
     "prettier": "3.4.2",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^2.1.8"
   }
 }
