@@ -1,7 +1,7 @@
 'use client'
+import React, { Suspense } from 'react'
 import { AgentListSidebar } from '@/components/agents/AgentListSidebar'
 import { AgentView } from '@/components/agents/AgentView'
-import { Suspense } from 'react'
 
 export default function Home() {
   return (

@@ -1,4 +1,6 @@
 'use client'
+
+import React from 'react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
@@ -37,7 +39,7 @@ export const ChatResetButton = ({
           variant="ghost"
           size="sm"
           className={`h-8 w-8 p-0 ${className}`}
-          title="新しいチャットを開始"
+          title="Reset chat"
         >
           <Sparkles size={16} />
         </Button>
@@ -45,12 +47,11 @@ export const ChatResetButton = ({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader className="space-y-4 text-center">
           <DialogTitle className="text-xl font-semibold">
-            チャットをリセットしますか？
+            Reset chat?
           </DialogTitle>
           <DialogDescription className="leading-relaxed text-gray-600">
-            現在のチャット履歴がすべて削除され、
-            <br />
-            新しいチャットが開始されます。
+            This will clear the current conversation history. This action cannot
+            be undone.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-3 pt-6">
@@ -59,13 +60,13 @@ export const ChatResetButton = ({
             onClick={() => setOpen(false)}
             className="flex-1"
           >
-            キャンセル
+            Cancel
           </Button>
           <Button
             onClick={handleConfirmReset}
             className="flex-1 bg-red-500 text-white hover:bg-red-600"
           >
-            リセット
+            Reset
           </Button>
         </DialogFooter>
       </DialogContent>

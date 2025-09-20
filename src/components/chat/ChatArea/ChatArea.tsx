@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import ChatInput from './ChatInput'
 import MessageArea from './MessageArea'
 const ChatArea = () => {

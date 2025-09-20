@@ -1,4 +1,6 @@
 'use client'
+
+import React from 'react'
 import Icon from '@/components/ui/icon'
 import { Button } from '@/components/ui/button'
 import { ChatResetButton } from './ChatResetButton'

@@ -1,3 +1,4 @@
+import React from 'react'
 import type { ChatMessage } from '@/types/chat'
 import { useStore } from '@/store'
 import Heading from '@/components/ui/typography/Heading'

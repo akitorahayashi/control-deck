@@ -14,6 +14,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "unit-test": "vitest run tests/unit",
+    "intg-test": "vitest run tests/intg",
     "build-test": "next build && docker build -t control-deck:build-test . && docker image rm control-deck:build-test",
     "clean": "rm -rf .next node_modules dev_server.log coverage dist"
   },
@@ -45,6 +46,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

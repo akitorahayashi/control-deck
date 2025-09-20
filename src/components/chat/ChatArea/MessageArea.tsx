@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useStore } from '@/store'
 import Messages from './Messages'
 import ScrollToBottom from '@/components/chat/ChatArea/ScrollToBottom'

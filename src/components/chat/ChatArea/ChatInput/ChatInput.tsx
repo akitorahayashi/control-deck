@@ -1,4 +1,6 @@
 'use client'
+
+import React from 'react'
 import { useState } from 'react'
 import { TextArea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
@@ -41,6 +43,7 @@ const ChatInput = () => {
         onClick={handleSubmit}
         disabled={!selectedAgent || !inputMessage.trim() || isStreaming}
         size="icon"
+        aria-label="Send message"
         className="flex-shrink-0 rounded-full bg-black p-2 text-white hover:bg-gray-800 disabled:bg-gray-400"
       >
         <Icon type="send" size="xs" color="white" />
