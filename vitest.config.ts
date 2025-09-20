@@ -5,14 +5,14 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    setupFiles: [],
+    setupFiles: []
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+      '@': path.resolve(__dirname, './src')
+    }
   },
   esbuild: {
-    target: 'esnext',
-  },
+    target: 'esnext'
+  }
 })
