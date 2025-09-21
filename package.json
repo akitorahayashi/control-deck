@@ -19,6 +19,8 @@
     "test:coverage": "vitest run --coverage",
     "unit-test": "vitest run tests/unit",
     "intg-test": "vitest run tests/intg",
+    "next-build-test": "next build",
+    "image-build-test": "docker build -t control-deck:build-test . && docker image rm control-deck:build-test",
     "build-test": "next build && docker build -t control-deck:build-test . && docker image rm control-deck:build-test",
     "clean": "rm -rf .next node_modules dev_server.log coverage dist"
   },
