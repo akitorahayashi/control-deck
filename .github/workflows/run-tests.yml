@@ -38,8 +38,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+      - name: Setup project
+        run: pnpm run setup
 
       - name: Run tests
         run: pnpm run ${{ matrix.test_target }}-test

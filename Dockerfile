@@ -4,6 +4,14 @@
 # Use Node.js 20 slim as the base image
 FROM node:20-slim AS builder
 
+# Define build arguments for API configuration
+ARG API_HOST
+ARG API_PORT
+
+# Set environment variables from build arguments
+ENV API_HOST=${API_HOST}
+ENV API_PORT=${API_PORT}
+
 # Install pnpm (pin to specific version for lockfile compatibility)
 RUN npm install -g pnpm@10.15.1
 
