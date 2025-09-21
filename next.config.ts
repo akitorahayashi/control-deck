@@ -8,7 +8,9 @@ const nextConfig: NextConfig = {
     const apiPort = process.env.API_PORT
 
     if (!apiHost || !apiPort) {
-      throw new Error('API_HOST and API_PORT environment variables are required')
+      throw new Error(
+        'API_HOST and API_PORT environment variables are required'
+      )
     }
 
     const apiUrl = `http://${apiHost}:${apiPort}`
@@ -16,10 +18,10 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${apiUrl}/api/:path*`,
-      },
+        destination: `${apiUrl}/api/:path*`
+      }
     ]
-  },
+  }
 }
 
 export default nextConfig
