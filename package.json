@@ -9,6 +9,8 @@
     "pnpm": ">=8.0.0"
   },
   "scripts": {
+    "setup": "pnpm install && npm run setup:env",
+    "setup:env": "if [ ! -f .env.local ] && [ -f .env.example ]; then cp .env.example .env.local && echo 'Created .env.local from .env.example'; else echo '.env.local already exists'; fi",
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
