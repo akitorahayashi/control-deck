@@ -4,8 +4,8 @@
 # Use Node.js 20 slim as the base image
 FROM node:20-slim AS builder
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install pnpm (pin to specific version for lockfile compatibility)
+RUN npm install -g pnpm@10.15.1
 
 # Set the working directory for the application
 WORKDIR /app
@@ -35,7 +35,7 @@ WORKDIR /app
 # Set the environment to production
 ENV NODE_ENV=production
 # Disable Next.js telemetry (optional)
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Create and use a non-root user for security
 RUN addgroup --system --gid 1001 nodejs
