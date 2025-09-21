@@ -35,7 +35,7 @@ describe('Integration Test: Chat Streaming Workflow', () => {
         isStreaming: false
       })
     })
-      ; (mockStreamingResponse as Mock).mockClear()
+    ;(mockStreamingResponse as Mock).mockClear()
 
     render(<Page />)
 
