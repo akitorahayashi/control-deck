@@ -1,6 +1,6 @@
 'use client'
 
-import { type FC, type JSX } from 'react'
+import React, { type FC, type JSX } from 'react'
 import { cn } from '@/lib/utils'
 
 import { HEADING_SIZES } from './constants'

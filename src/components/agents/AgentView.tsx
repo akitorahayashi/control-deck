@@ -1,4 +1,6 @@
 'use client'
+
+import React from 'react'
 import { useStore } from '@/store'
 import { ChatArea } from '@/components/chat/ChatArea'
 import { mockConversations } from '@/lib/mocks'

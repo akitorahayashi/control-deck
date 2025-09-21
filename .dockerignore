@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+
+# Next.js build cache
+.next
+
+# Git
+.git
+.gitignore
+
+# OS-specific files
+.DS_Store
+*.log
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Other configuration files
+.coderabbit.yml
+README.md
+eslint.config.mjs
+prettier.config.cjs

@@ -1,4 +1,6 @@
 'use client'
+
+import React from 'react'
 import { motion } from 'framer-motion'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Icon, { IconType } from '@/components/ui/icon'
