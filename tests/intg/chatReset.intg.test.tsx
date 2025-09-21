@@ -24,7 +24,8 @@ describe('Integration Test: Chat Reset Workflow', () => {
     act(() => {
       useStore.setState({
         selectedAgent: null,
-        isStreaming: false
+        isStreaming: false,
+        messages: []
       })
     })
     ;(mockStreamingResponse as Mock).mockClear()
@@ -34,15 +35,7 @@ describe('Integration Test: Chat Reset Workflow', () => {
       const { addMessage, updateMessageContent, setIsStreaming } =
         useStore.getState()
 
-      // Add user message
-      const userMessage = {
-        id: `msg-${Date.now()}`,
-        role: 'user' as const,
-        content: message,
-        timestamp: new Date().toISOString()
-      }
-      addMessage(userMessage)
-
+      // Note: User message is now added by ChatInput component
       // Add agent message
       const agentMessageId = `msg-${Date.now() + 1}`
       const agentMessage = {
@@ -87,7 +80,8 @@ describe('Integration Test: Chat Reset Workflow', () => {
 
   it('should clear the conversation history when the reset button is clicked and confirmed', async () => {
     // 1. Initial state validation (messages exist)
-    expect(screen.getByText('Message 1')).toBeInTheDocument()
+    const message1Elements = screen.getAllByText('Message 1')
+    expect(message1Elements).toHaveLength(1)
     expect(screen.getByText('Response to: Message 1')).toBeInTheDocument()
     expect(screen.getByText('Message 2')).toBeInTheDocument()
     expect(screen.getByText('Response to: Message 2')).toBeInTheDocument()

@@ -9,11 +9,20 @@ import Icon from '@/components/ui/icon'
 import { mockStreamingResponse } from '@/lib/mocks'
 
 const ChatInput = () => {
-  const { chatInputRef, selectedAgent, isStreaming } = useStore()
+  const { chatInputRef, selectedAgent, isStreaming, addMessage } = useStore()
   const [inputMessage, setInputMessage] = useState('')
 
   const handleSubmit = async () => {
     if (!inputMessage.trim() || !selectedAgent || isStreaming) return
+
+    // Add user message to store
+    const userMessage = {
+      id: `msg-${Date.now()}`,
+      role: 'user' as const,
+      content: inputMessage,
+      timestamp: new Date().toISOString()
+    }
+    addMessage(userMessage)
 
     mockStreamingResponse(inputMessage)
     setInputMessage('')

@@ -18,6 +18,7 @@ import { useStore } from '@/store'
 import { mockStreamingResponse } from '@/lib/mocks/streaming'
 
 const mockUseStore = vi.mocked(useStore)
+const mockAddMessage = vi.fn()
 
 describe('ChatInput', () => {
   beforeEach(() => {
@@ -28,7 +29,8 @@ describe('ChatInput', () => {
     mockUseStore.mockReturnValue({
       chatInputRef: { current: null },
       selectedAgent: null,
-      isStreaming: false
+      isStreaming: false,
+      addMessage: mockAddMessage
     } as any)
 
     render(<ChatInput />)
@@ -46,7 +48,8 @@ describe('ChatInput', () => {
     mockUseStore.mockReturnValue({
       chatInputRef: { current: null },
       selectedAgent: mockAgent,
-      isStreaming: true
+      isStreaming: true,
+      addMessage: mockAddMessage
     } as any)
 
     render(<ChatInput />)
@@ -64,7 +67,8 @@ describe('ChatInput', () => {
     mockUseStore.mockReturnValue({
       chatInputRef: { current: null },
       selectedAgent: mockAgent,
-      isStreaming: false
+      isStreaming: false,
+      addMessage: mockAddMessage
     } as any)
 
     render(<ChatInput />)
@@ -85,7 +89,8 @@ describe('ChatInput', () => {
     mockUseStore.mockReturnValue({
       chatInputRef: { current: null },
       selectedAgent: mockAgent,
-      isStreaming: false
+      isStreaming: false,
+      addMessage: mockAddMessage
     } as any)
 
     render(<ChatInput />)
@@ -103,7 +108,8 @@ describe('ChatInput', () => {
     mockUseStore.mockReturnValue({
       chatInputRef: { current: null },
       selectedAgent: mockAgent,
-      isStreaming: false
+      isStreaming: false,
+      addMessage: mockAddMessage
     } as any)
 
     render(<ChatInput />)
@@ -114,6 +120,12 @@ describe('ChatInput', () => {
     fireEvent.change(textarea, { target: { value: 'Test message' } })
     fireEvent.click(button)
 
+    expect(mockAddMessage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        role: 'user',
+        content: 'Test message'
+      })
+    )
     expect(mockStreamingResponse).toHaveBeenCalledWith('Test message')
     expect(textarea).toHaveValue('')
   })
@@ -124,7 +136,8 @@ describe('ChatInput', () => {
     mockUseStore.mockReturnValue({
       chatInputRef: { current: null },
       selectedAgent: mockAgent,
-      isStreaming: false
+      isStreaming: false,
+      addMessage: mockAddMessage
     } as any)
 
     render(<ChatInput />)
@@ -134,6 +147,12 @@ describe('ChatInput', () => {
     fireEvent.change(textarea, { target: { value: 'Test message' } })
     fireEvent.keyDown(textarea, { key: 'Enter', shiftKey: false })
 
+    expect(mockAddMessage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        role: 'user',
+        content: 'Test message'
+      })
+    )
     expect(mockStreamingResponse).toHaveBeenCalledWith('Test message')
   })
 
@@ -143,7 +162,8 @@ describe('ChatInput', () => {
     mockUseStore.mockReturnValue({
       chatInputRef: { current: null },
       selectedAgent: mockAgent,
-      isStreaming: false
+      isStreaming: false,
+      addMessage: mockAddMessage
     } as any)
 
     render(<ChatInput />)
