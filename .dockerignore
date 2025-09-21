@@ -12,9 +12,19 @@ node_modules
 .DS_Store
 *.log
 
+# Environment variables (secrets)
+.env
+.env.*
+!.env.example
+
 # Docker
 Dockerfile
 .dockerignore
+
+# Build artifacts
+coverage
+dist
+dev_server.log
 
 # Other configuration files
 .coderabbit.yml

@@ -35,7 +35,7 @@ describe('Integration Test: Chat Streaming Workflow', () => {
         isStreaming: false
       })
     })
-    ;(mockStreamingResponse as Mock).mockClear()
+      ; (mockStreamingResponse as Mock).mockClear()
 
     render(<Page />)
 
@@ -46,19 +46,10 @@ describe('Integration Test: Chat Streaming Workflow', () => {
 
   it('should handle message submission and render streaming responses correctly', async () => {
     // Mock implementation for this specific test
-    ;(mockStreamingResponse as Mock).mockImplementation((message: string) => {
-      const { addMessage, updateMessageContent, setIsStreaming } =
-        useStore.getState()
+    vi.mocked(mockStreamingResponse).mockImplementation((message: string) => {
+      const { addMessage, setIsStreaming } = useStore.getState()
 
-      // Add user message
-      const userMessage = {
-        id: `msg-${Date.now()}`,
-        role: 'user' as const,
-        content: message,
-        timestamp: new Date().toISOString()
-      }
-      addMessage(userMessage)
-
+      // （ユーザーメッセージは UI 側で既に追加される前提）
       // Add agent message and respond immediately
       const agentMessageId = `msg-${Date.now() + 1}`
       const agentMessage = {
