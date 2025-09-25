@@ -1,20 +1,20 @@
-import { useState } from 'react'
-import Icon from '@/components/ui/icon'
+import { useState } from 'react';
+import Icon from '@/components/ui/icon';
 
 const thinkingAnimation = {
   animation: 'thinking 1.2s ease-in-out infinite'
-}
+};
 
 const thinkingKeyframes = `
 @keyframes thinking {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
-}`
+}`;
 
 interface ThinkingExpanderProps {
-  thinking: string
-  content: string
-  isStreamingThinking?: boolean
+  thinking: string;
+  content: string;
+  isStreamingThinking?: boolean;
 }
 
 const ThinkingExpander = ({
@@ -22,14 +22,14 @@ const ThinkingExpander = ({
   content,
   isStreamingThinking = false
 }: ThinkingExpanderProps) => {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (!thinking && !isStreamingThinking) {
-    return null
+    return null;
   }
 
-  const isThinking = thinking && !content
-  const buttonText = isThinking ? '思考中...' : '思考プロセスを表示'
+  const isThinking = thinking && !content;
+  const buttonText = isThinking ? '思考中...' : '思考プロセスを表示';
 
   return (
     <>
@@ -58,7 +58,7 @@ const ThinkingExpander = ({
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ThinkingExpander
+export default ThinkingExpander;

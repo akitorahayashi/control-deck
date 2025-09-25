@@ -1,9 +1,9 @@
-import React, { type FC } from 'react'
+import React, { type FC } from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
-import { PARAGRAPH_SIZES } from './constants'
-import { type ParagraphProps } from './types'
+import { PARAGRAPH_SIZES } from './constants';
+import { type ParagraphProps } from './types';
 
 const Paragraph: FC<ParagraphProps> = ({
   children,
@@ -14,6 +14,6 @@ const Paragraph: FC<ParagraphProps> = ({
   <p id={id} className={cn(PARAGRAPH_SIZES[size], className)}>
     {children}
   </p>
-)
+);
 
-export default Paragraph
+export default Paragraph;

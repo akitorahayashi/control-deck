@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
-import { useStore } from '@/store'
-import Heading from '@/components/ui/typography/Heading'
-import Paragraph from '@/components/ui/typography/Paragraph'
-import { APP_NAME } from '@/lib/constants'
+import { useStore } from '@/store';
+import Heading from '@/components/ui/typography/Heading';
+import Paragraph from '@/components/ui/typography/Paragraph';
+import { APP_NAME } from '@/lib/constants';
 
 const ChatBlankState = () => {
-  const { selectedAgent } = useStore()
+  const { selectedAgent } = useStore();
 
   if (selectedAgent) {
     return (
@@ -23,7 +23,7 @@ const ChatBlankState = () => {
           </Paragraph>
         </div>
       </section>
-    )
+    );
   }
 
   return (
@@ -37,7 +37,7 @@ const ChatBlankState = () => {
         </Heading>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ChatBlankState
+export default ChatBlankState;

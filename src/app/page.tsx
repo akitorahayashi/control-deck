@@ -1,7 +1,7 @@
-'use client'
-import React, { Suspense } from 'react'
-import { AgentListSidebar } from '@/components/agents/AgentListSidebar'
-import { AgentView } from '@/components/agents/AgentView'
+'use client';
+import React, { Suspense } from 'react';
+import { AgentListSidebar } from '@/components/agents/AgentListSidebar';
+import { AgentView } from '@/components/agents/AgentView';
 
 export default function Home() {
   return (
@@ -11,5 +11,5 @@ export default function Home() {
         <AgentView />
       </div>
     </Suspense>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { type ElementType } from 'react'
+import { type ElementType } from 'react';
 
 export type IconType =
   | 'refresh'
@@ -21,16 +21,16 @@ export type IconType =
   | 'code'
   | 'chart-bar'
   | 'pencil'
-  | 'settings'
+  | 'settings';
 
 export interface IconProps {
-  type: IconType
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'dot' | 'xxs' | 'default'
-  className?: string
-  color?: string
-  disabled?: boolean
+  type: IconType;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'dot' | 'xxs' | 'default';
+  className?: string;
+  color?: string;
+  disabled?: boolean;
 }
 
 export type IconTypeMap = {
-  [key in IconType]: ElementType
-}
+  [key in IconType]: ElementType;
+};

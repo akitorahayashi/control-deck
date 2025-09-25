@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
+import { useState } from 'react';
 
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 import type {
   UnorderedListProps,
@@ -22,19 +22,19 @@ import type {
   HeadingProps,
   ImgProps,
   ParagraphProps
-} from './types'
+} from './types';
 
-import { PARAGRAPH_SIZES } from '../Paragraph/constants'
+import { PARAGRAPH_SIZES } from '../Paragraph/constants';
 
 const filterProps = (props: object) => {
-  const newProps = { ...props }
+  const newProps = { ...props };
 
   if ('node' in newProps) {
-    delete newProps.node
+    delete newProps.node;
   }
 
-  return newProps
-}
+  return newProps;
+};
 
 const UnorderedList = ({ className, ...props }: UnorderedListProps) => (
   <ul
@@ -45,7 +45,7 @@ const UnorderedList = ({ className, ...props }: UnorderedListProps) => (
     )}
     {...filterProps(props)}
   />
-)
+);
 
 const OrderedList = ({ className, ...props }: OrderedListProps) => (
   <ol
@@ -56,64 +56,64 @@ const OrderedList = ({ className, ...props }: OrderedListProps) => (
     )}
     {...filterProps(props)}
   />
-)
+);
 
 const Paragraph = ({ className, ...props }: ParagraphProps) => (
   <p className={cn(className, PARAGRAPH_SIZES.lead)} {...filterProps(props)} />
-)
+);
 
 const EmphasizedText = ({ className, ...props }: EmphasizedTextProps) => (
   <em
     className={cn(className, 'PARAGRAPH_SIZES.lead')}
     {...filterProps(props)}
   />
-)
+);
 
 const ItalicText = ({ className, ...props }: ItalicTextProps) => (
   <i className={cn(className, PARAGRAPH_SIZES.lead)} {...filterProps(props)} />
-)
+);
 
 const StrongText = ({ className, ...props }: StrongTextProps) => (
   <strong
     className={cn(className, 'PARAGRAPH_SIZES.lead')}
     {...filterProps(props)}
   />
-)
+);
 
 const BoldText = ({ className, ...props }: BoldTextProps) => (
   <b
     className={cn(className, 'PARAGRAPH_SIZES.lead')}
     {...filterProps(props)}
   />
-)
+);
 
 const UnderlinedText = ({ className, ...props }: UnderlinedTextProps) => (
   <u
     className={cn(className, 'underline', PARAGRAPH_SIZES.lead)}
     {...filterProps(props)}
   />
-)
+);
 
 const DeletedText = ({ className, ...props }: DeletedTextProps) => (
   <del
     className={cn(className, 'text-muted line-through', PARAGRAPH_SIZES.lead)}
     {...filterProps(props)}
   />
-)
+);
 
 const HorizontalRule = ({ className, ...props }: HorizontalRuleProps) => (
   <hr
     className={cn(className, 'mx-auto w-48 border-b border-border')}
     {...filterProps(props)}
   />
-)
+);
 
 const Blockquote = ({ className, ...props }: BlockquoteProps) => (
   <blockquote
     className={cn(className, PARAGRAPH_SIZES.lead)}
     {...filterProps(props)}
   />
-)
+);
 
 const AnchorLink = ({ className, ...props }: AnchorLinkProps) => (
   <a
@@ -122,38 +122,38 @@ const AnchorLink = ({ className, ...props }: AnchorLinkProps) => (
     rel="noopener noreferrer"
     {...filterProps(props)}
   />
-)
+);
 
 const Heading1 = ({ className, ...props }: HeadingProps) => (
   <h1 className={cn(className, PARAGRAPH_SIZES.lead)} {...filterProps(props)} />
-)
+);
 
 const Heading2 = ({ className, ...props }: HeadingProps) => (
   <h2 className={cn(className, PARAGRAPH_SIZES.lead)} {...filterProps(props)} />
-)
+);
 
 const Heading3 = ({ className, ...props }: HeadingProps) => (
   <h3 className={cn(className, PARAGRAPH_SIZES.lead)} {...filterProps(props)} />
-)
+);
 
 const Heading4 = ({ className, ...props }: HeadingProps) => (
   <h4 className={cn(className, PARAGRAPH_SIZES.lead)} {...filterProps(props)} />
-)
+);
 
 const Heading5 = ({ className, ...props }: HeadingProps) => (
   <h5 className={cn(className, PARAGRAPH_SIZES.lead)} {...filterProps(props)} />
-)
+);
 
 const Heading6 = ({ className, ...props }: HeadingProps) => (
   <h6 className={cn(className, PARAGRAPH_SIZES.lead)} {...filterProps(props)} />
-)
+);
 
 const Img = ({ src, alt }: ImgProps) => {
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
 
-  if (!src) return null
+  if (!src) return null;
 
-  const imageUrl = typeof src === 'string' ? src : URL.createObjectURL(src)
+  const imageUrl = typeof src === 'string' ? src : URL.createObjectURL(src);
 
   return (
     <div className="w-full max-w-xl">
@@ -180,8 +180,8 @@ const Img = ({ src, alt }: ImgProps) => {
         />
       )}
     </div>
-  )
-}
+  );
+};
 
 export const inlineComponents = {
   h1: Heading1,
@@ -203,4 +203,4 @@ export const inlineComponents = {
   a: AnchorLink,
   img: Img,
   p: Paragraph
-}
+};

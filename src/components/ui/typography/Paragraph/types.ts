@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from 'react';
 
 type ParagraphSizes =
   | 'xs'
@@ -9,15 +9,15 @@ type ParagraphSizes =
   | 'title'
   | 'body'
   | 'mono'
-  | 'xsmall'
+  | 'xsmall';
 
 export interface ParagraphProps {
-  children: ReactNode
-  size?: ParagraphSizes
-  className?: string
-  id?: string
+  children: ReactNode;
+  size?: ParagraphSizes;
+  className?: string;
+  id?: string;
 }
 
 export type ParagraphSizeMap = {
-  [key in ParagraphSizes]: string
-}
+  [key in ParagraphSizes]: string;
+};

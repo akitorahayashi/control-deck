@@ -1,4 +1,4 @@
-import { Agent } from '@/types/agent'
+import { Agent } from '@/types/agent';
 
 export const mockAgents: Agent[] = [
   {
@@ -38,4 +38,4 @@ export const mockAgents: Agent[] = [
     description: 'Crafts engaging stories, articles, and creative content',
     specialty: 'creative-writing'
   }
-]
+];

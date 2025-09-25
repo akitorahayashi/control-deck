@@ -1,7 +1,7 @@
-'use client'
-import Heading from '@/components/ui/typography/Heading'
-import Paragraph from '@/components/ui/typography/Paragraph'
-import { AgentInfoProps } from '@/types/agent'
+'use client';
+import Heading from '@/components/ui/typography/Heading';
+import Paragraph from '@/components/ui/typography/Paragraph';
+import { AgentInfoProps } from '@/types/agent';
 
 export const AgentInfo = ({ agent, className = '' }: AgentInfoProps) => {
   return (
@@ -13,5 +13,5 @@ export const AgentInfo = ({ agent, className = '' }: AgentInfoProps) => {
         {agent.description}
       </Paragraph>
     </div>
-  )
-}
+  );
+};

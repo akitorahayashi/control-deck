@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import React, { type FC, type JSX } from 'react'
-import { cn } from '@/lib/utils'
+import React, { type FC, type JSX } from 'react';
+import { cn } from '@/lib/utils';
 
-import { HEADING_SIZES } from './constants'
-import { type HeadingProps } from './types'
+import { HEADING_SIZES } from './constants';
+import { type HeadingProps } from './types';
 
 const Heading: FC<HeadingProps> = ({ children, size, fontSize, className }) => {
-  const Tag = `h${size}` as keyof JSX.IntrinsicElements
+  const Tag = `h${size}` as keyof JSX.IntrinsicElements;
 
   return (
     <Tag
@@ -19,7 +19,7 @@ const Heading: FC<HeadingProps> = ({ children, size, fontSize, className }) => {
     >
       {children}
     </Tag>
-  )
-}
+  );
+};
 
-export default Heading
+export default Heading;

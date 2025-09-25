@@ -1,4 +1,4 @@
-import { IconTypeMap } from './types'
+import { IconTypeMap } from './types';
 import {
   RefreshCw,
   Edit,
@@ -20,9 +20,9 @@ import {
   BarChart3,
   Pencil,
   Settings
-} from 'lucide-react'
+} from 'lucide-react';
 
-import { PlusIcon } from '@radix-ui/react-icons'
+import { PlusIcon } from '@radix-ui/react-icons';
 
 export const ICONS: IconTypeMap = {
   refresh: RefreshCw,
@@ -46,4 +46,4 @@ export const ICONS: IconTypeMap = {
   'chart-bar': BarChart3,
   pencil: Pencil,
   settings: Settings
-}
+};

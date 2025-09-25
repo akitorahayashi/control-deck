@@ -1,9 +1,9 @@
-import React, { type FC } from 'react'
+import React, { type FC } from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
-import { ICONS } from './constants'
-import { type IconProps } from './types'
+import { ICONS } from './constants';
+import { type IconProps } from './types';
 
 const Icon: FC<IconProps> = ({
   type,
@@ -12,7 +12,7 @@ const Icon: FC<IconProps> = ({
   color,
   disabled = false
 }) => {
-  const IconElement = ICONS[type]
+  const IconElement = ICONS[type];
 
   return (
     <IconElement
@@ -29,7 +29,7 @@ const Icon: FC<IconProps> = ({
         size === 'default' && 'h-6 w-6'
       )}
     />
-  )
-}
+  );
+};
 
-export default Icon
+export default Icon;

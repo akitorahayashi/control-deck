@@ -1,13 +1,13 @@
-import { type FC } from 'react'
+import { type FC } from 'react';
 
 import {
   TooltipProvider,
   Tooltip as BaseTooltip,
   TooltipContent,
   TooltipTrigger
-} from '@/components/ui/tooltip/tooltip'
+} from '@/components/ui/tooltip/tooltip';
 
-import type { TooltipProps } from '@/components/ui/tooltip/types'
+import type { TooltipProps } from '@/components/ui/tooltip/types';
 
 const Tooltip: FC<TooltipProps> = ({
   className,
@@ -25,6 +25,6 @@ const Tooltip: FC<TooltipProps> = ({
       </TooltipContent>
     </BaseTooltip>
   </TooltipProvider>
-)
+);
 
-export default Tooltip
+export default Tooltip;

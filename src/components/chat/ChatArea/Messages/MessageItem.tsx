@@ -1,9 +1,9 @@
-import type { ChatMessage } from '@/types/chat'
-import { memo } from 'react'
-import ThinkingExpander from './ThinkingExpander'
+import type { ChatMessage } from '@/types/chat';
+import { memo } from 'react';
+import ThinkingExpander from './ThinkingExpander';
 
 interface MessageProps {
-  message: ChatMessage
+  message: ChatMessage;
 }
 
 const AgentMessage = ({ message }: MessageProps) => {
@@ -21,8 +21,8 @@ const AgentMessage = ({ message }: MessageProps) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const UserMessage = memo(({ message }: MessageProps) => {
   return (
@@ -31,9 +31,9 @@ const UserMessage = memo(({ message }: MessageProps) => {
         {message.content}
       </div>
     </div>
-  )
-})
+  );
+});
 
-AgentMessage.displayName = 'AgentMessage'
-UserMessage.displayName = 'UserMessage'
-export { AgentMessage, UserMessage }
+AgentMessage.displayName = 'AgentMessage';
+UserMessage.displayName = 'UserMessage';
+export { AgentMessage, UserMessage };

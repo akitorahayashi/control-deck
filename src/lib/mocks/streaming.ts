@@ -1,6 +1,6 @@
-import { ChatMessage } from '@/types/chat'
-import { useStore } from '@/store'
-import dayjs from 'dayjs'
+import { ChatMessage } from '@/types/chat';
+import { useStore } from '@/store';
+import dayjs from 'dayjs';
 
 export const mockStreamingResponse = (userInput: string) => {
   const {
@@ -9,19 +9,19 @@ export const mockStreamingResponse = (userInput: string) => {
     updateMessageContent,
     updateMessageThinking,
     setIsStreaming
-  } = useStore.getState()
+  } = useStore.getState();
 
-  if (!selectedAgent) return
+  if (!selectedAgent) return;
 
   const userMessage: ChatMessage = {
     id: `msg-${Date.now()}`,
     role: 'user',
     content: userInput,
     timestamp: dayjs().toISOString()
-  }
-  addMessage(userMessage)
+  };
+  addMessage(userMessage);
 
-  const agentMessageId = `msg-${Date.now() + 1}`
+  const agentMessageId = `msg-${Date.now() + 1}`;
   const agentMessage: ChatMessage = {
     id: agentMessageId,
     role: 'agent',
@@ -29,9 +29,9 @@ export const mockStreamingResponse = (userInput: string) => {
     content: '',
     thinking: '',
     timestamp: dayjs().toISOString()
-  }
-  addMessage(agentMessage)
-  setIsStreaming(true)
+  };
+  addMessage(agentMessage);
+  setIsStreaming(true);
 
   const thinkingChunks = [
     'The user has asked me about "',
@@ -45,7 +45,7 @@ export const mockStreamingResponse = (userInput: string) => {
     "First, I need to analyze what they're asking for. ",
     'I should provide a comprehensive and helpful response. ',
     'Let me structure my thoughts and provide the best solution.'
-  ]
+  ];
 
   const responseChunks = [
     'Of course! ',
@@ -60,28 +60,28 @@ export const mockStreamingResponse = (userInput: string) => {
     'First, we could approach this by... ',
     'Another option would be to... ',
     "Let me know how you'd like to proceed!"
-  ]
+  ];
 
   // First stream thinking
-  let thinkingIndex = 0
+  let thinkingIndex = 0;
   const thinkingInterval = setInterval(() => {
     if (thinkingIndex < thinkingChunks.length) {
-      updateMessageThinking(agentMessageId, thinkingChunks[thinkingIndex])
-      thinkingIndex++
+      updateMessageThinking(agentMessageId, thinkingChunks[thinkingIndex]);
+      thinkingIndex++;
     } else {
-      clearInterval(thinkingInterval)
+      clearInterval(thinkingInterval);
 
       // Start response after thinking is complete
-      let responseIndex = 0
+      let responseIndex = 0;
       const responseInterval = setInterval(() => {
         if (responseIndex < responseChunks.length) {
-          updateMessageContent(agentMessageId, responseChunks[responseIndex])
-          responseIndex++
+          updateMessageContent(agentMessageId, responseChunks[responseIndex]);
+          responseIndex++;
         } else {
-          clearInterval(responseInterval)
-          setIsStreaming(false)
+          clearInterval(responseInterval);
+          setIsStreaming(false);
         }
-      }, 150)
+      }, 150);
     }
-  }, 100)
-}
+  }, 100);
+};

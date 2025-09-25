@@ -1,17 +1,17 @@
-import React from 'react'
-import type { ChatMessage } from '@/types/chat'
-import { useStore } from '@/store'
-import Heading from '@/components/ui/typography/Heading'
-import Paragraph from '@/components/ui/typography/Paragraph'
+import React from 'react';
+import type { ChatMessage } from '@/types/chat';
+import { useStore } from '@/store';
+import Heading from '@/components/ui/typography/Heading';
+import Paragraph from '@/components/ui/typography/Paragraph';
 
-import { AgentMessage, UserMessage } from './MessageItem'
+import { AgentMessage, UserMessage } from './MessageItem';
 
 interface MessageListProps {
-  messages: ChatMessage[]
+  messages: ChatMessage[];
 }
 
 const Messages = ({ messages }: MessageListProps) => {
-  const { selectedAgent } = useStore()
+  const { selectedAgent } = useStore();
 
   return (
     <>
@@ -36,15 +36,15 @@ const Messages = ({ messages }: MessageListProps) => {
         </>
       )}
       {messages.map((message, index) => {
-        const key = `${message.role}-${message.timestamp}-${index}`
+        const key = `${message.role}-${message.timestamp}-${index}`;
 
         if (message.role === 'agent') {
-          return <AgentMessage key={key} message={message} />
+          return <AgentMessage key={key} message={message} />;
         }
-        return <UserMessage key={key} message={message} />
+        return <UserMessage key={key} message={message} />;
       })}
     </>
-  )
-}
+  );
+};
 
-export default Messages
+export default Messages;

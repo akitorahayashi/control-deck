@@ -1,31 +1,31 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { useStore } from '@/store'
-import { ChatArea } from '@/components/chat/ChatArea'
-import { mockConversations } from '@/lib/mocks'
-import { useEffect } from 'react'
-import Heading from '../ui/typography/Heading'
-import Paragraph from '../ui/typography/Paragraph'
-import { StatusBar } from '../ui/StatusBar/StatusBar'
+import React from 'react';
+import { useStore } from '@/store';
+import { ChatArea } from '@/components/chat/ChatArea';
+import { mockConversations } from '@/lib/mocks';
+import { useEffect } from 'react';
+import Heading from '../ui/typography/Heading';
+import Paragraph from '../ui/typography/Paragraph';
+import { StatusBar } from '../ui/StatusBar/StatusBar';
 
 export const AgentView = () => {
-  const { selectedAgent, setMessages } = useStore()
+  const { selectedAgent, setMessages } = useStore();
 
   useEffect(() => {
     if (selectedAgent) {
       const conversation = mockConversations.find(
         (c) => c.agentId === selectedAgent.id
-      )
-      setMessages(conversation ? conversation.messages : [])
+      );
+      setMessages(conversation ? conversation.messages : []);
     } else {
-      setMessages([])
+      setMessages([]);
     }
-  }, [selectedAgent, setMessages])
+  }, [selectedAgent, setMessages]);
 
   const handleChatReset = () => {
-    setMessages([])
-  }
+    setMessages([]);
+  };
 
   if (!selectedAgent) {
     return (
@@ -37,7 +37,7 @@ export const AgentView = () => {
           </Paragraph>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -47,5 +47,5 @@ export const AgentView = () => {
         <ChatArea />
       </div>
     </div>
-  )
-}
+  );
+};
