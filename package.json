@@ -1,5 +1,5 @@
 {
-  "name": "control-deck",
+  "name": "control-deck-ui",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -22,8 +22,8 @@
     "unit-test": "vitest run tests/unit",
     "intg-test": "vitest run tests/intg",
     "next-build-test": "next build",
-    "image-build-test": "docker build -t control-deck:build-test . && docker image rm control-deck:build-test",
-    "build-test": "next build && docker build --build-arg API_HOST=127.0.0.1 --build-arg API_PORT=8001 -t control-deck:build-test . && docker image rm control-deck:build-test",
+    "image-build-test": "docker build -t control-deck-ui:build-test . && docker image rm control-deck-ui:build-test",
+    "build-test": "next build && docker build --build-arg API_HOST=127.0.0.1 --build-arg API_PORT=8001 -t control-deck-ui:build-test . && docker image rm control-deck-ui:build-test",
     "clean": "rm -rf .next node_modules dev_server.log coverage dist"
   },
   "dependencies": {

@@ -32,7 +32,7 @@ const ChatBlankState = () => {
     >
       <div className="flex max-w-3xl flex-col gap-y-4">
         <Heading size={1} className="tracking-tight">
-          Control Deck
+          Control Deck UI
         </Heading>
       </div>
     </section>

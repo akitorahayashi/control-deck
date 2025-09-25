@@ -1,10 +1,10 @@
-# Control Deck
+# Control Deck UI
 
 A standalone UI for managing LLM agents with specialized capabilities.
 
 ## Overview
 
-Control Deck provides a comprehensive interface for interacting with AI agents, each specialized in different domains such as research, coding, analysis, and creative writing. The application features a sidebar for agent selection and a main chat area for conversations.
+Control Deck UI provides a comprehensive interface for interacting with AI agents, each specialized in different domains such as research, coding, analysis, and creative writing. The application features a sidebar for agent selection and a main chat area for conversations.
 
 ## Features
 
@@ -178,10 +178,10 @@ Build and run with Docker:
 
 ```bash
 # Build image
-docker build -t control-deck .
+docker build -t control-deck-ui .
 
 # Run container
-docker run -p 3000:3000 control-deck
+docker run -p 3000:3000 control-deck-ui
 ```
 
 ## CI/CD

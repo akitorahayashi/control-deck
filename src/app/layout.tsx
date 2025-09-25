@@ -15,7 +15,7 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Control Deck',
+  title: 'Control Deck UI',
   description:
     'A modern task management interface for local LLM agents built with Next.js, Tailwind CSS, and TypeScript.'
 }

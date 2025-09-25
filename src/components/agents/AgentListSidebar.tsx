@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 
 const SidebarHeader = () => (
   <div className="flex items-center gap-2 p-2">
-    <Heading size={2}>Control Deck</Heading>
+    <Heading size={2}>Control Deck UI</Heading>
   </div>
 )
 

@@ -31,14 +31,14 @@ describe('ChatBlankState', () => {
     expect(screen.getByText(mockAgent.description)).toBeInTheDocument()
   })
 
-  it('should display "Control Deck" heading when no agent is selected', () => {
+  it('should display "Control Deck UI" heading when no agent is selected', () => {
     mockUseStore.mockReturnValue({
       selectedAgent: null
     } as any)
 
     render(<ChatBlankState />)
 
-    expect(screen.getByText('Control Deck')).toBeInTheDocument()
+    expect(screen.getByText('Control Deck UI')).toBeInTheDocument()
   })
 
   it('should render different content based on selectedAgent state', () => {
@@ -59,7 +59,7 @@ describe('ChatBlankState', () => {
     } as any)
 
     rerender(<ChatBlankState />)
-    expect(screen.getByText('Control Deck')).toBeInTheDocument()
+    expect(screen.getByText('Control Deck UI')).toBeInTheDocument()
     expect(screen.queryByText(mockAgent.name)).not.toBeInTheDocument()
   })
 })
