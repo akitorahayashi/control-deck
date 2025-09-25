@@ -3,6 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import ChatBlankState from '@/components/chat/ChatArea/Messages/ChatBlankState'
 import { mockAgents } from '@/lib/mocks'
+import { APP_NAME } from '@/lib/constants'
 
 // Mock the store
 vi.mock('@/store', () => ({
@@ -31,14 +32,14 @@ describe('ChatBlankState', () => {
     expect(screen.getByText(mockAgent.description)).toBeInTheDocument()
   })
 
-  it('should display "Control Deck UI" heading when no agent is selected', () => {
+  it(`should display "${APP_NAME}" heading when no agent is selected`, () => {
     mockUseStore.mockReturnValue({
       selectedAgent: null
     } as any)
 
     render(<ChatBlankState />)
 
-    expect(screen.getByText('Control Deck UI')).toBeInTheDocument()
+    expect(screen.getByText(APP_NAME)).toBeInTheDocument()
   })
 
   it('should render different content based on selectedAgent state', () => {
@@ -59,7 +60,7 @@ describe('ChatBlankState', () => {
     } as any)
 
     rerender(<ChatBlankState />)
-    expect(screen.getByText('Control Deck UI')).toBeInTheDocument()
+    expect(screen.getByText(APP_NAME)).toBeInTheDocument()
     expect(screen.queryByText(mockAgent.name)).not.toBeInTheDocument()
   })
 })

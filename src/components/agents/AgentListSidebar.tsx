@@ -9,10 +9,11 @@ import { useStore } from '@/store'
 import { mockAgents } from '@/lib/mocks'
 import { Agent } from '@/types/agent'
 import { cn } from '@/lib/utils'
+import { APP_NAME } from '@/lib/constants'
 
 const SidebarHeader = () => (
   <div className="flex items-center gap-2 p-2">
-    <Heading size={2}>Control Deck UI</Heading>
+    <Heading size={2}>{APP_NAME}</Heading>
   </div>
 )
 

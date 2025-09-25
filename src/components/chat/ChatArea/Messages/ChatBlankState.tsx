@@ -3,6 +3,7 @@
 import { useStore } from '@/store'
 import Heading from '@/components/ui/typography/Heading'
 import Paragraph from '@/components/ui/typography/Paragraph'
+import { APP_NAME } from '@/lib/constants'
 
 const ChatBlankState = () => {
   const { selectedAgent } = useStore()
@@ -32,7 +33,7 @@ const ChatBlankState = () => {
     >
       <div className="flex max-w-3xl flex-col gap-y-4">
         <Heading size={1} className="tracking-tight">
-          Control Deck UI
+          {APP_NAME}
         </Heading>
       </div>
     </section>
