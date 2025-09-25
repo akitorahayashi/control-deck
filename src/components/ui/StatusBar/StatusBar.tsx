@@ -1,20 +1,20 @@
-'use client'
+'use client';
 
-import React from 'react'
-import Icon from '@/components/ui/icon'
-import { Button } from '@/components/ui/button'
-import { ChatResetButton } from './ChatResetButton'
+import React from 'react';
+import Icon from '@/components/ui/icon';
+import { Button } from '@/components/ui/button';
+import { ChatResetButton } from './ChatResetButton';
 
 interface StatusBarProps {
-  className?: string
-  onChatReset?: () => void
+  className?: string;
+  onChatReset?: () => void;
 }
 
 export const StatusBar = ({ className, onChatReset }: StatusBarProps) => {
   const handleSettingsClick = () => {
     // 未実装
-    console.log('Settings clicked')
-  }
+    console.log('Settings clicked');
+  };
 
   return (
     <div
@@ -37,5 +37,5 @@ export const StatusBar = ({ className, onChatReset }: StatusBarProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

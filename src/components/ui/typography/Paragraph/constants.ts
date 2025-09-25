@@ -1,4 +1,4 @@
-import { type ParagraphSizeMap } from './types'
+import { type ParagraphSizeMap } from './types';
 
 export const PARAGRAPH_SIZES: ParagraphSizeMap = {
   xs: 'text-xs',
@@ -11,4 +11,4 @@ export const PARAGRAPH_SIZES: ParagraphSizeMap = {
   mono: 'font-dmmono text-[0.75rem] font-normal leading-[1.125rem] tracking-[-0.02em]',
   xsmall:
     'font-inter text-[0.75rem] font-normal leading-[1.0625rem] tracking-[-0.02em]'
-}
+};

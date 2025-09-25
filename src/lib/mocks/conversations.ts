@@ -1,5 +1,5 @@
-import { AgentConversation } from '@/types/chat'
-import dayjs from 'dayjs'
+import { AgentConversation } from '@/types/chat';
+import dayjs from 'dayjs';
 
 export const mockConversations: AgentConversation[] = [
   {
@@ -61,4 +61,4 @@ export const mockConversations: AgentConversation[] = [
     agentId: 'agent-006',
     messages: []
   }
-]
+];

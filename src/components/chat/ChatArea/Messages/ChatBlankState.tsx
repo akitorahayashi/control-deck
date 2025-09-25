@@ -1,11 +1,12 @@
-'use client'
+'use client';
 
-import { useStore } from '@/store'
-import Heading from '@/components/ui/typography/Heading'
-import Paragraph from '@/components/ui/typography/Paragraph'
+import { useStore } from '@/store';
+import Heading from '@/components/ui/typography/Heading';
+import Paragraph from '@/components/ui/typography/Paragraph';
+import { APP_NAME } from '@/lib/constants';
 
 const ChatBlankState = () => {
-  const { selectedAgent } = useStore()
+  const { selectedAgent } = useStore();
 
   if (selectedAgent) {
     return (
@@ -22,7 +23,7 @@ const ChatBlankState = () => {
           </Paragraph>
         </div>
       </section>
-    )
+    );
   }
 
   return (
@@ -32,11 +33,11 @@ const ChatBlankState = () => {
     >
       <div className="flex max-w-3xl flex-col gap-y-4">
         <Heading size={1} className="tracking-tight">
-          Control Deck
+          {APP_NAME}
         </Heading>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ChatBlankState
+export default ChatBlankState;

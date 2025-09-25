@@ -4,17 +4,17 @@ export type AgentSpecialty =
   | 'prompt-generation'
   | 'coding'
   | 'analysis'
-  | 'creative-writing'
+  | 'creative-writing';
 
 export interface Agent {
-  id: string
-  name: string
-  description: string
-  specialty: AgentSpecialty
-  avatarUrl?: string
+  id: string;
+  name: string;
+  description: string;
+  specialty: AgentSpecialty;
+  avatarUrl?: string;
 }
 
 export interface AgentInfoProps {
-  agent: Agent
-  className?: string
+  agent: Agent;
+  className?: string;
 }

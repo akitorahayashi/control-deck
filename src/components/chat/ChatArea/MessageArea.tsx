@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { useStore } from '@/store'
-import Messages from './Messages'
-import ScrollToBottom from '@/components/chat/ChatArea/ScrollToBottom'
-import { StickToBottom } from 'use-stick-to-bottom'
+import React from 'react';
+import { useStore } from '@/store';
+import Messages from './Messages';
+import ScrollToBottom from '@/components/chat/ChatArea/ScrollToBottom';
+import { StickToBottom } from 'use-stick-to-bottom';
 
 const MessageArea = () => {
-  const { messages } = useStore()
+  const { messages } = useStore();
 
   return (
     <StickToBottom
@@ -22,7 +22,7 @@ const MessageArea = () => {
       </StickToBottom.Content>
       <ScrollToBottom />
     </StickToBottom>
-  )
-}
+  );
+};
 
-export default MessageArea
+export default MessageArea;

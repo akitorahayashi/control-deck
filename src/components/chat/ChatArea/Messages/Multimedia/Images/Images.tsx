@@ -1,9 +1,9 @@
-import { memo } from 'react'
-import { cn } from '@/lib/utils'
+import { memo } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ImageData {
-  url: string
-  revised_prompt?: string
+  url: string;
+  revised_prompt?: string;
 }
 
 const Images = ({ images }: { images: ImageData[] }) => (
@@ -21,7 +21,7 @@ const Images = ({ images }: { images: ImageData[] }) => (
           alt={image.revised_prompt || 'AI generated image'}
           className="w-full rounded-lg"
           onError={(e) => {
-            const parent = e.currentTarget.parentElement
+            const parent = e.currentTarget.parentElement;
             if (parent) {
               parent.innerHTML = `
                     <div class="flex h-40 flex-col items-center justify-center gap-2 rounded-md bg-secondary/50 text-muted" >
@@ -30,15 +30,15 @@ const Images = ({ images }: { images: ImageData[] }) => (
                         ${image.url}
                       </a>
                     </div>
-                  `
+                  `;
             }
           }}
         />
       </div>
     ))}
   </div>
-)
+);
 
-export default memo(Images)
+export default memo(Images);
 
-Images.displayName = 'Images'
+Images.displayName = 'Images';

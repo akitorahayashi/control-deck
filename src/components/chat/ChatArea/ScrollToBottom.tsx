@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useStickToBottomContext } from 'use-stick-to-bottom'
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useStickToBottomContext } from 'use-stick-to-bottom';
 
-import { Button } from '@/components/ui/button'
-import Icon from '@/components/ui/icon'
+import { Button } from '@/components/ui/button';
+import Icon from '@/components/ui/icon';
 
 const ScrollToBottom: React.FC = () => {
-  const { isAtBottom, scrollToBottom } = useStickToBottomContext()
+  const { isAtBottom, scrollToBottom } = useStickToBottomContext();
 
   return (
     <AnimatePresence>
@@ -32,7 +32,7 @@ const ScrollToBottom: React.FC = () => {
         </motion.div>
       )}
     </AnimatePresence>
-  )
-}
+  );
+};
 
-export default ScrollToBottom
+export default ScrollToBottom;

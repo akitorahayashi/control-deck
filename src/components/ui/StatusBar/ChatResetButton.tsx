@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import React from 'react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -11,26 +11,26 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
-import { Sparkles } from 'lucide-react'
+} from '@/components/ui/dialog';
+import { Sparkles } from 'lucide-react';
 
 interface ChatResetButtonProps {
-  onReset?: () => void
-  className?: string
+  onReset?: () => void;
+  className?: string;
 }
 
 export const ChatResetButton = ({
   onReset,
   className
 }: ChatResetButtonProps) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleConfirmReset = () => {
     if (onReset) {
-      onReset()
+      onReset();
     }
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -71,5 +71,5 @@ export const ChatResetButton = ({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};

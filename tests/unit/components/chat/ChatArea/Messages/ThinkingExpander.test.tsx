@@ -1,12 +1,12 @@
-import React from 'react'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
-import ThinkingExpander from '@/components/chat/ChatArea/Messages/ThinkingExpander'
+import React from 'react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import ThinkingExpander from '@/components/chat/ChatArea/Messages/ThinkingExpander';
 
 describe('ThinkingExpander', () => {
   beforeEach(() => {
-    vi.clearAllMocks()
-  })
+    vi.clearAllMocks();
+  });
 
   it('should return null when thinking is empty and not streaming', () => {
     const { container } = render(
@@ -15,9 +15,9 @@ describe('ThinkingExpander', () => {
         content="Some content"
         isStreamingThinking={false}
       />
-    )
-    expect(container.firstChild).toBeNull()
-  })
+    );
+    expect(container.firstChild).toBeNull();
+  });
 
   it('should display "思考中..." when thinking exists but content is empty', () => {
     render(
@@ -26,10 +26,10 @@ describe('ThinkingExpander', () => {
         content=""
         isStreamingThinking={false}
       />
-    )
+    );
 
-    expect(screen.getByText('思考中...')).toBeInTheDocument()
-  })
+    expect(screen.getByText('思考中...')).toBeInTheDocument();
+  });
 
   it('should display "思考プロセスを表示" when thinking and content both exist', () => {
     render(
@@ -38,10 +38,10 @@ describe('ThinkingExpander', () => {
         content="Response content"
         isStreamingThinking={false}
       />
-    )
+    );
 
-    expect(screen.getByText('思考プロセスを表示')).toBeInTheDocument()
-  })
+    expect(screen.getByText('思考プロセスを表示')).toBeInTheDocument();
+  });
 
   it('should toggle expanded state when button is clicked', () => {
     render(
@@ -50,17 +50,17 @@ describe('ThinkingExpander', () => {
         content="Response content"
         isStreamingThinking={false}
       />
-    )
+    );
 
-    const button = screen.getByText('思考プロセスを表示')
-    expect(screen.queryByText('Thinking process...')).not.toBeInTheDocument()
+    const button = screen.getByText('思考プロセスを表示');
+    expect(screen.queryByText('Thinking process...')).not.toBeInTheDocument();
 
-    fireEvent.click(button)
-    expect(screen.getByText('Thinking process...')).toBeInTheDocument()
+    fireEvent.click(button);
+    expect(screen.getByText('Thinking process...')).toBeInTheDocument();
 
-    fireEvent.click(button)
-    expect(screen.queryByText('Thinking process...')).not.toBeInTheDocument()
-  })
+    fireEvent.click(button);
+    expect(screen.queryByText('Thinking process...')).not.toBeInTheDocument();
+  });
 
   it('should display thinking content when expanded', () => {
     render(
@@ -69,13 +69,13 @@ describe('ThinkingExpander', () => {
         content="Response"
         isStreamingThinking={false}
       />
-    )
+    );
 
-    const button = screen.getByText('思考プロセスを表示')
-    fireEvent.click(button)
+    const button = screen.getByText('思考プロセスを表示');
+    fireEvent.click(button);
 
-    expect(screen.getByText('This is my thinking process')).toBeInTheDocument()
-  })
+    expect(screen.getByText('This is my thinking process')).toBeInTheDocument();
+  });
 
   it('should render pulse animation when isStreamingThinking is true', () => {
     render(
@@ -84,12 +84,12 @@ describe('ThinkingExpander', () => {
         content=""
         isStreamingThinking={true}
       />
-    )
+    );
 
     // Check for the pulse element (inline style animation)
-    const pulseElement = document.querySelector('span[style*="thinking"]')
-    expect(pulseElement).toBeInTheDocument()
-  })
+    const pulseElement = document.querySelector('span[style*="thinking"]');
+    expect(pulseElement).toBeInTheDocument();
+  });
 
   it('should not render pulse animation when isStreamingThinking is false', () => {
     render(
@@ -98,11 +98,11 @@ describe('ThinkingExpander', () => {
         content=""
         isStreamingThinking={false}
       />
-    )
+    );
 
-    const pulseElement = document.querySelector('.animate-pulse')
-    expect(pulseElement).toBeNull()
-  })
+    const pulseElement = document.querySelector('.animate-pulse');
+    expect(pulseElement).toBeNull();
+  });
 
   it('should handle empty thinking with streaming', () => {
     render(
@@ -111,9 +111,9 @@ describe('ThinkingExpander', () => {
         content="Some content"
         isStreamingThinking={true}
       />
-    )
+    );
 
     // When thinking is empty but isStreamingThinking is true, component should still render
-    expect(screen.getByText('思考プロセスを表示')).toBeInTheDocument()
-  })
-})
+    expect(screen.getByText('思考プロセスを表示')).toBeInTheDocument();
+  });
+});

@@ -1,14 +1,14 @@
-import { type FC } from 'react'
-import ReactMarkdown from 'react-markdown'
-import rehypeRaw from 'rehype-raw'
-import rehypeSanitize from 'rehype-sanitize'
-import remarkGfm from 'remark-gfm'
+import { type FC } from 'react';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
+import remarkGfm from 'remark-gfm';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
-import { type MarkdownRendererProps } from './types'
-import { inlineComponents } from './inlineStyles'
-import { components } from './styles'
+import { type MarkdownRendererProps } from './types';
+import { inlineComponents } from './inlineStyles';
+import { components } from './styles';
 
 const MarkdownRenderer: FC<MarkdownRendererProps> = ({
   children,
@@ -26,6 +26,6 @@ const MarkdownRenderer: FC<MarkdownRendererProps> = ({
   >
     {children}
   </ReactMarkdown>
-)
+);
 
-export default MarkdownRenderer
+export default MarkdownRenderer;

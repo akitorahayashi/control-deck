@@ -1,20 +1,21 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import { useState, useEffect, useRef, useCallback } from 'react'
-import Icon, { IconType } from '@/components/ui/icon'
-import Heading from '@/components/ui/typography/Heading'
-import { useStore } from '@/store'
-import { mockAgents } from '@/lib/mocks'
-import { Agent } from '@/types/agent'
-import { cn } from '@/lib/utils'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import Icon, { IconType } from '@/components/ui/icon';
+import Heading from '@/components/ui/typography/Heading';
+import { useStore } from '@/store';
+import { mockAgents } from '@/lib/mocks';
+import { Agent } from '@/types/agent';
+import { cn } from '@/lib/utils';
+import { APP_NAME } from '@/lib/constants';
 
 const SidebarHeader = () => (
   <div className="flex items-center gap-2 p-2">
-    <Heading size={2}>Control Deck</Heading>
+    <Heading size={2}>{APP_NAME}</Heading>
   </div>
-)
+);
 
 const specialtyColors: Record<string, string> = {
   research: 'bg-blue-500',
@@ -23,7 +24,7 @@ const specialtyColors: Record<string, string> = {
   coding: 'bg-orange-500',
   analysis: 'bg-pink-500',
   'creative-writing': 'bg-yellow-500'
-}
+};
 
 const specialtyIcons: Record<string, string> = {
   research: 'search',
@@ -32,16 +33,16 @@ const specialtyIcons: Record<string, string> = {
   coding: 'code',
   analysis: 'chart-bar',
   'creative-writing': 'pencil'
-}
+};
 
 const AgentItem = ({
   agent,
   isSelected
 }: {
-  agent: Agent
-  isSelected: boolean
+  agent: Agent;
+  isSelected: boolean;
 }) => {
-  const { setSelectedAgent } = useStore()
+  const { setSelectedAgent } = useStore();
 
   return (
     <div
@@ -68,57 +69,57 @@ const AgentItem = ({
         <p className="text-muted-foreground text-xs">{agent.description}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const AgentListSidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false)
-  const [sidebarWidth, setSidebarWidth] = useState(320)
-  const [isResizing, setIsResizing] = useState(false)
-  const sidebarRef = useRef<HTMLDivElement>(null)
-  const { agents, setAgents, selectedAgent } = useStore()
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(320);
+  const [isResizing, setIsResizing] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const { agents, setAgents, selectedAgent } = useStore();
 
-  const MIN_WIDTH = 200
-  const MAX_WIDTH = 600
-  const COLLAPSED_WIDTH = 53
+  const MIN_WIDTH = 200;
+  const MAX_WIDTH = 600;
+  const COLLAPSED_WIDTH = 53;
 
   useEffect(() => {
-    setAgents(mockAgents)
-  }, [setAgents])
+    setAgents(mockAgents);
+  }, [setAgents]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault()
-    setIsResizing(true)
-  }, [])
+    e.preventDefault();
+    setIsResizing(true);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isResizing) return
+      if (!isResizing) return;
 
-      const newWidth = e.clientX
+      const newWidth = e.clientX;
       if (newWidth >= MIN_WIDTH && newWidth <= MAX_WIDTH) {
-        setSidebarWidth(newWidth)
+        setSidebarWidth(newWidth);
       }
-    }
+    };
 
     const handleMouseUp = () => {
-      setIsResizing(false)
-    }
+      setIsResizing(false);
+    };
 
     if (isResizing) {
-      document.addEventListener('mousemove', handleMouseMove)
-      document.addEventListener('mouseup', handleMouseUp)
-      document.body.style.cursor = 'col-resize'
-      document.body.style.userSelect = 'none'
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
     }
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
-      document.body.style.cursor = ''
-      document.body.style.userSelect = ''
-    }
-  }, [isResizing])
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+  }, [isResizing]);
 
   return (
     <motion.aside
@@ -169,5 +170,5 @@ export const AgentListSidebar = () => {
         </div>
       </motion.div>
     </motion.aside>
-  )
-}
+  );
+};
