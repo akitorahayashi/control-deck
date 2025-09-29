@@ -17,13 +17,19 @@ const ChatInput = () => {
   const isStreaming = useStore((state) => state.isStreaming);
   const setIsStreaming = useStore((state) => state.setIsStreaming);
   const appendUserMessage = useStore((state) => state.appendUserMessage);
-  const appendAssistantPlaceholder = useStore((state) => state.appendAssistantPlaceholder);
-  const appendAssistantContent = useStore((state) => state.appendAssistantContent);
-  const appendAssistantThinking = useStore((state) => state.appendAssistantThinking);
+  const appendAssistantPlaceholder = useStore(
+    (state) => state.appendAssistantPlaceholder
+  );
+  const appendAssistantContent = useStore(
+    (state) => state.appendAssistantContent
+  );
+  const appendAssistantThinking = useStore(
+    (state) => state.appendAssistantThinking
+  );
   const replaceMessage = useStore((state) => state.replaceMessage);
   const buildRequestMessages = useStore((state) => state.buildRequestMessages);
 
-  const selectedAgent = useMemo(() => selectedAgentRaw, [selectedAgentRaw?.id]);
+  const selectedAgent = useMemo(() => selectedAgentRaw, [selectedAgentRaw]);
 
   const handleSubmit = async () => {
     const trimmed = inputMessage.trim();

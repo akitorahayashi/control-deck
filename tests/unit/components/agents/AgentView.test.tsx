@@ -34,7 +34,18 @@ describe('AgentView', () => {
     const clearMessages = vi.fn();
     const selectedAgent = mockAgents[0];
 
-    const state = { selectedAgent, clearMessages, messages: [{ id: '1', role: 'user', content: 'hi', timestamp: '2024-01-01T00:00:00Z' }] };
+    const state = {
+      selectedAgent,
+      clearMessages,
+      messages: [
+        {
+          id: '1',
+          role: 'user',
+          content: 'hi',
+          timestamp: '2024-01-01T00:00:00Z'
+        }
+      ]
+    };
     mockUseStore.mockImplementation((selector?: any) =>
       typeof selector === 'function' ? selector(state) : state
     );

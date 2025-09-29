@@ -11,8 +11,8 @@ export const AgentView = () => {
   const selectedAgentRaw = useStore((state) => state.selectedAgent);
   const clearMessagesRaw = useStore((state) => state.clearMessages);
 
-  const selectedAgent = useMemo(() => selectedAgentRaw, [selectedAgentRaw?.id]);
-  const clearMessages = useMemo(() => clearMessagesRaw, []);
+  const selectedAgent = useMemo(() => selectedAgentRaw, [selectedAgentRaw]);
+  const clearMessages = useMemo(() => clearMessagesRaw, [clearMessagesRaw]);
 
   const handleChatReset = () => {
     clearMessages();

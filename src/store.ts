@@ -72,10 +72,8 @@ export const useStore = create<Store>()((set, get) => ({
       const currentId = state.selectedAgent?.id ?? null;
       const nextId = agent?.id ?? null;
       if (currentId === nextId) {
-        console.log('[store] select same agent', nextId);
         return { selectedAgent: agent };
       }
-      console.log('[store] select agent', nextId);
       return { selectedAgent: agent, messages: [] };
     }),
   messages: [],
@@ -129,9 +127,9 @@ export const useStore = create<Store>()((set, get) => ({
       messages: state.messages.map((msg) =>
         msg.id === id
           ? {
-              ...msg,
-              ...patch
-            }
+            ...msg,
+            ...patch
+          }
           : msg
       )
     }));

@@ -30,7 +30,9 @@ const baseStateFactory = () => ({
   buildRequestMessages: vi.fn().mockReturnValue([])
 });
 
-const setupStore = (overrides: Partial<ReturnType<typeof baseStateFactory>> = {}) => {
+const setupStore = (
+  overrides: Partial<ReturnType<typeof baseStateFactory>> = {}
+) => {
   const state = createStoreState(overrides);
   mockUseStore.mockImplementation((selector?: any) =>
     typeof selector === 'function' ? selector(state) : state
@@ -77,7 +79,9 @@ describe('ChatInput', () => {
   it('sends messages through the chat service and clears the input', async () => {
     const agent = mockAgents[0];
     const appendUserMessage = vi.fn().mockReturnValue({ id: 'user-msg' });
-    const appendAssistantPlaceholder = vi.fn().mockReturnValue({ id: 'assistant-msg' });
+    const appendAssistantPlaceholder = vi
+      .fn()
+      .mockReturnValue({ id: 'assistant-msg' });
     const buildRequestMessages = vi
       .fn()
       .mockReturnValue([{ role: 'user', content: 'Test message' }]);
@@ -115,7 +119,9 @@ describe('ChatInput', () => {
     const agent = mockAgents[0];
     const appendAssistantThinking = vi.fn();
     const appendAssistantContent = vi.fn();
-    const appendAssistantPlaceholder = vi.fn().mockReturnValue({ id: 'assistant-msg' });
+    const appendAssistantPlaceholder = vi
+      .fn()
+      .mockReturnValue({ id: 'assistant-msg' });
     setupStore({
       selectedAgent: agent,
       appendAssistantPlaceholder,
@@ -141,21 +147,31 @@ describe('ChatInput', () => {
       expect(sendChatMock).toHaveBeenCalled();
     });
 
-    expect(appendAssistantThinking).toHaveBeenCalledWith('assistant-msg', 'Thinking... ');
-    expect(appendAssistantContent).toHaveBeenCalledWith('assistant-msg', 'Hello');
+    expect(appendAssistantThinking).toHaveBeenCalledWith(
+      'assistant-msg',
+      'Thinking... '
+    );
+    expect(appendAssistantContent).toHaveBeenCalledWith(
+      'assistant-msg',
+      'Hello'
+    );
   });
 
   it('replaces assistant content with an error fallback when streaming fails', async () => {
     const agent = mockAgents[0];
     const replaceMessage = vi.fn();
-    const appendAssistantPlaceholder = vi.fn().mockReturnValue({ id: 'assistant-msg' });
+    const appendAssistantPlaceholder = vi
+      .fn()
+      .mockReturnValue({ id: 'assistant-msg' });
     const setIsStreaming = vi.fn();
     setupStore({
       selectedAgent: agent,
       replaceMessage,
       appendAssistantPlaceholder,
       setIsStreaming,
-      buildRequestMessages: vi.fn().mockReturnValue([{ role: 'user', content: 'Hi' }])
+      buildRequestMessages: vi
+        .fn()
+        .mockReturnValue([{ role: 'user', content: 'Hi' }])
     });
 
     sendChatMock.mockImplementation(async ({ onError }) => {
@@ -174,7 +190,9 @@ describe('ChatInput', () => {
 
     expect(replaceMessage).toHaveBeenCalledWith(
       'assistant-msg',
-      expect.objectContaining({ content: expect.stringMatching(/something went wrong/i) })
+      expect.objectContaining({
+        content: expect.stringMatching(/something went wrong/i)
+      })
     );
     expect(setIsStreaming).toHaveBeenCalledWith(false);
   });
@@ -183,7 +201,9 @@ describe('ChatInput', () => {
     const agent = mockAgents[0];
     setupStore({
       selectedAgent: agent,
-      buildRequestMessages: vi.fn().mockReturnValue([{ role: 'user', content: 'Hi' }])
+      buildRequestMessages: vi
+        .fn()
+        .mockReturnValue([{ role: 'user', content: 'Hi' }])
     });
     sendChatMock.mockResolvedValue(undefined);
 
@@ -202,9 +222,9 @@ describe('ChatInput', () => {
   });
 });
 
-
-const createStoreState = (overrides: Partial<ReturnType<typeof baseStateFactory>> = {}) => {
+const createStoreState = (
+  overrides: Partial<ReturnType<typeof baseStateFactory>> = {}
+) => {
   const base = baseStateFactory();
   return { ...base, ...overrides };
 };
-
