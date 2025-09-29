@@ -127,9 +127,9 @@ export const useStore = create<Store>()((set, get) => ({
       messages: state.messages.map((msg) =>
         msg.id === id
           ? {
-            ...msg,
-            ...patch
-          }
+              ...msg,
+              ...patch
+            }
           : msg
       )
     }));

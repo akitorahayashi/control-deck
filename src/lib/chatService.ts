@@ -138,6 +138,20 @@ export const sendChat = async (params: SendChatParams): Promise<unknown> => {
       signal
     });
   } catch (error) {
+    console.log('fetch error:', error);
+    if (
+      error &&
+      typeof error === 'object' &&
+      error !== null &&
+      'name' in error &&
+      error.name === 'AbortError'
+    ) {
+      console.log('is AbortError');
+      const abortError = new Error('Chat request was aborted');
+      emitError(abortError);
+      throw abortError;
+    }
+    console.log('not AbortError');
     const err =
       error instanceof Error
         ? error
@@ -155,11 +169,11 @@ export const sendChat = async (params: SendChatParams): Promise<unknown> => {
     }
     const message =
       detail &&
-        typeof detail === 'object' &&
-        detail !== null &&
-        'detail' in detail
+      typeof detail === 'object' &&
+      detail !== null &&
+      'detail' in detail
         ? ((detail as Record<string, unknown>).detail as string) ||
-        `Chat request failed with status ${response.status}`
+          `Chat request failed with status ${response.status}`
         : `Chat request failed with status ${response.status}`;
     const error = buildError(response.status, message, detail);
     emitError(error, detail);
@@ -286,7 +300,13 @@ export const sendChat = async (params: SendChatParams): Promise<unknown> => {
     onComplete?.();
     return;
   } catch (error) {
-    if (error instanceof Error && error.name === 'AbortError') {
+    if (
+      error &&
+      typeof error === 'object' &&
+      error !== null &&
+      'name' in error &&
+      error.name === 'AbortError'
+    ) {
       const abortError = new Error('Chat request was aborted');
       emitError(abortError);
       throw abortError;

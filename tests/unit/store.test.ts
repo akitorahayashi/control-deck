@@ -128,4 +128,119 @@ describe('Zustand Store', () => {
     });
     expect(result.current.isStreaming).toBe(false);
   });
+
+  it('clears messages when selectedAgent changes', () => {
+    const { result } = renderHook(() => useStore());
+    const agent1: Agent = {
+      id: 'agent-1',
+      name: 'Agent 1',
+      description: 'Desc',
+      specialty: 'research'
+    };
+    const agent2: Agent = {
+      id: 'agent-2',
+      name: 'Agent 2',
+      description: 'Desc',
+      specialty: 'research'
+    };
+
+    act(() => {
+      result.current.setSelectedAgent(agent1);
+      result.current.appendUserMessage('Hello');
+    });
+    expect(result.current.messages).toHaveLength(1);
+
+    act(() => {
+      result.current.setSelectedAgent(agent2);
+    });
+    expect(result.current.messages).toHaveLength(0);
+  });
+
+  it('does not clear messages when same agent is selected', () => {
+    const { result } = renderHook(() => useStore());
+    const agent: Agent = {
+      id: 'agent-1',
+      name: 'Agent 1',
+      description: 'Desc',
+      specialty: 'research'
+    };
+
+    act(() => {
+      result.current.setSelectedAgent(agent);
+      result.current.appendUserMessage('Hello');
+    });
+    expect(result.current.messages).toHaveLength(1);
+
+    act(() => {
+      result.current.setSelectedAgent({ ...agent, name: 'Updated Name' });
+    });
+    expect(result.current.messages).toHaveLength(1);
+  });
+
+  it('filters out empty assistant messages in buildRequestMessages', () => {
+    const { result } = renderHook(() => useStore());
+
+    act(() => {
+      result.current.appendUserMessage('Hi');
+      const assistantId =
+        result.current.appendAssistantPlaceholder('agent-001').id;
+      // Empty content assistant message should be filtered out
+      result.current.appendAssistantContent(assistantId, '');
+      result.current.appendUserMessage('How are you?');
+      const assistantId2 =
+        result.current.appendAssistantPlaceholder('agent-001').id;
+      result.current.appendAssistantContent(assistantId2, 'I am fine');
+    });
+
+    const payload = result.current.buildRequestMessages();
+    expect(payload).toEqual([
+      { role: 'user', content: 'Hi' },
+      { role: 'user', content: 'How are you?' },
+      { role: 'assistant', content: 'I am fine' }
+    ]);
+  });
+
+  it('does not clear messages when same agent is selected', () => {
+    const { result } = renderHook(() => useStore());
+    const agent: Agent = {
+      id: 'agent-1',
+      name: 'Agent 1',
+      description: 'Desc',
+      specialty: 'research'
+    };
+
+    act(() => {
+      result.current.setSelectedAgent(agent);
+      result.current.appendUserMessage('Hello');
+    });
+    expect(result.current.messages).toHaveLength(1);
+
+    act(() => {
+      result.current.setSelectedAgent({ ...agent, name: 'Updated Name' });
+    });
+    expect(result.current.messages).toHaveLength(1);
+  });
+
+  it('filters out empty assistant messages in buildRequestMessages', () => {
+    const { result } = renderHook(() => useStore());
+
+    act(() => {
+      result.current.appendUserMessage('Hi');
+      const assistantId =
+        result.current.appendAssistantPlaceholder('agent-001').id;
+      // Empty content assistant message should be filtered out
+      result.current.appendAssistantContent(assistantId, '');
+      result.current.appendUserMessage('How are you?');
+      const assistantId2 =
+        result.current.appendAssistantPlaceholder('agent-001').id;
+      result.current.appendAssistantContent(assistantId2, 'I am fine');
+    });
+
+    const payload = result.current.buildRequestMessages();
+    expect(payload).toEqual([
+      { role: 'user', content: 'Hi' },
+      { role: 'user', content: 'How are you?' },
+      { role: 'assistant', content: 'I am fine' }
+    ]);
+  });
 });
