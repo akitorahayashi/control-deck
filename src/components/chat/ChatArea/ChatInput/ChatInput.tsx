@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useStore } from '@/store';
 import Icon from '@/components/ui/icon';
 import { sendChat } from '@/lib/chatService';
+import { mockStreamingResponse } from '@/lib/mocks/streaming';
 
 const ERROR_FALLBACK_MESSAGE =
   'Sorry, something went wrong while contacting the agent. Please try again.';
@@ -35,6 +36,13 @@ const ChatInput = () => {
     const trimmed = inputMessage.trim();
     if (!trimmed || !selectedAgent || isStreaming) return;
 
+    setInputMessage('');
+
+    if (process.env.NEXT_PUBLIC_USE_MOCK === 'true') {
+      mockStreamingResponse(trimmed);
+      return;
+    }
+
     // 前のリクエストがあれば中断する
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -50,7 +58,6 @@ const ChatInput = () => {
     try {
       appendUserMessage(trimmed);
       assistantMessageId = appendAssistantPlaceholder(selectedAgent.id).id;
-      setInputMessage('');
       setIsStreaming(true);
 
       await sendChat({
