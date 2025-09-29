@@ -15,10 +15,10 @@ describe('Integration Test: Agent Selection Workflow', () => {
   beforeEach(() => {
     // Reset store before each test
     act(() => {
-      useStore.setState({
-        selectedAgent: null,
-        isStreaming: false
-      });
+      const store = useStore.getState();
+      store.setSelectedAgent(null);
+      store.clearMessages();
+      store.setIsStreaming(false);
     });
     render(<Page />);
   });

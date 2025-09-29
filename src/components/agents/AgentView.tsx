@@ -1,30 +1,21 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useStore } from '@/store';
 import { ChatArea } from '@/components/chat/ChatArea';
-import { mockConversations } from '@/lib/mocks';
-import { useEffect } from 'react';
 import Heading from '../ui/typography/Heading';
 import Paragraph from '../ui/typography/Paragraph';
 import { StatusBar } from '../ui/StatusBar/StatusBar';
 
 export const AgentView = () => {
-  const { selectedAgent, setMessages } = useStore();
+  const selectedAgentRaw = useStore((state) => state.selectedAgent);
+  const clearMessagesRaw = useStore((state) => state.clearMessages);
 
-  useEffect(() => {
-    if (selectedAgent) {
-      const conversation = mockConversations.find(
-        (c) => c.agentId === selectedAgent.id
-      );
-      setMessages(conversation ? conversation.messages : []);
-    } else {
-      setMessages([]);
-    }
-  }, [selectedAgent, setMessages]);
+  const selectedAgent = useMemo(() => selectedAgentRaw, [selectedAgentRaw?.id]);
+  const clearMessages = useMemo(() => clearMessagesRaw, []);
 
   const handleChatReset = () => {
-    setMessages([]);
+    clearMessages();
   };
 
   if (!selectedAgent) {

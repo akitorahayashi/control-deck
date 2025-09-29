@@ -63,12 +63,13 @@ src/
 │       ├── tooltip/      # Tooltip components
 │       └── typography/   # Text and markdown components
 ├── lib/                  # Utilities and helpers
-│   ├── mocks/           # Mock data for development
-│   │   ├── agents.ts    # Sample agent definitions
-│   │   ├── conversations.ts # Sample conversations
-│   │   └── streaming.ts # Mock streaming responses
+│   ├── chatService.ts   # Wrapper around the Django chat API
 │   ├── agentUtils.ts    # Agent-related utilities
-│   └── utils.ts         # General utilities
+│   ├── utils.ts         # General utilities
+│   └── mocks/           # Dev/test-only mock data (not used in production)
+│       ├── agents.ts    # Sample agent definitions
+│       ├── conversations.ts # Sample conversations
+│       └── streaming.ts # Local streaming simulator
 ├── store.ts             # Zustand global state management
 └── types/               # TypeScript type definitions
     ├── agent.ts         # Agent-related types
@@ -120,9 +121,20 @@ The application uses Zustand for state management with the following store struc
 
 Key state actions:
 - `setSelectedAgent()`: Switch between agents
-- `addMessage()`: Add new messages to conversation
-- `updateMessageContent()`: Update streaming message content
-- `updateMessageThinking()`: Update agent thinking process
+- `clearMessages()`: Reset the transcript when changing agents
+- `appendUserMessage()`: Append a user turn and capture its timestamp
+- `appendAssistantPlaceholder()`: Prepare an empty assistant turn for streaming updates
+- `appendAssistantThinking()` / `appendAssistantContent()`: Stream reasoning and answer chunks into the placeholder
+- `replaceMessage()`: Patch an existing message (e.g., to surface errors)
+- `buildRequestMessages()`: Transform the current transcript into API-ready payloads
+
+## Chat Backend Integration
+
+The chat experience is backed by the Django API introduced in Phase 1. The helper at `frontend/src/lib/chatService.ts` wraps the `/api/v1/agents/{agentId}/chat/` endpoint, parses Server-Sent Events, and exposes ergonomic callbacks (`onChunk`, `onComplete`, `onError`) for the UI store.
+
+Configure the browser-visible base URL with `NEXT_PUBLIC_BACKEND_URL`. When omitted, the helper defaults to `/api/v1`, which aligns with the development proxy configured in `next.config.ts`. Ensure `API_HOST` and `API_PORT` remain set so Next.js can forward `/api/*` calls to the Django server during local development.
+
+Mock data under `frontend/src/lib/mocks` is preserved for tests and manual demos only; runtime components now rely exclusively on the streaming API.
 
 ## Development
 
@@ -229,7 +241,7 @@ Workflows run on:
 
 ## Future Enhancements
 
-- **Backend Integration**: Connect to Django REST API or similar backend
+- **Backend Enhancements**: Extend the Django proxy with advanced capabilities (tool calls, vision, etc.)
 - **Authentication**: User management and session handling
 - **Agent Customization**: Create and configure custom agents
 - **Conversation History**: Persistent chat history across sessions

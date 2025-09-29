@@ -1,117 +1,131 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import { useStore } from '@/store';
-import { Agent } from '@/types/agent';
-import { ChatMessage } from '@/types/chat';
+import type { Agent } from '@/types/agent';
+
+const resetStore = () => {
+  const store = useStore.getState();
+  store.setAgents([]);
+  store.setSelectedAgent(null);
+  store.setMessages([]);
+  store.setIsStreaming(false);
+};
 
 describe('Zustand Store', () => {
   beforeEach(() => {
-    // Reset store state before each test
-    useStore.getState().setAgents([]);
-    useStore.getState().setSelectedAgent(null);
-    useStore.getState().setMessages([]);
-    useStore.getState().setIsStreaming(false);
+    resetStore();
   });
 
-  describe('setSelectedAgent', () => {
-    it('should set selectedAgent correctly', () => {
-      const { result } = renderHook(() => useStore());
+  it('sets selectedAgent correctly', () => {
+    const { result } = renderHook(() => useStore());
+    const mockAgent: Agent = {
+      id: 'agent-001',
+      name: 'Test Agent',
+      description: 'Test Description',
+      specialty: 'research'
+    };
 
-      const mockAgent: Agent = {
-        id: 'agent-001',
-        name: 'Test Agent',
-        description: 'Test Description',
-        specialty: 'research'
-      };
-
-      act(() => {
-        result.current.setSelectedAgent(mockAgent);
-      });
-
-      expect(result.current.selectedAgent).toEqual(mockAgent);
+    act(() => {
+      result.current.setSelectedAgent(mockAgent);
     });
+
+    expect(result.current.selectedAgent).toEqual(mockAgent);
   });
 
-  describe('addMessage', () => {
-    it('should add a message to the messages array', () => {
-      const { result } = renderHook(() => useStore());
+  it('appends user messages with generated metadata', () => {
+    const { result } = renderHook(() => useStore());
+    let messageId = '';
 
-      const mockMessage: ChatMessage = {
-        id: 'msg-1',
-        role: 'user',
-        content: 'Hello',
-        timestamp: '2024-01-01T00:00:00Z'
-      };
-
-      act(() => {
-        result.current.addMessage(mockMessage);
-      });
-
-      expect(result.current.messages).toHaveLength(1);
-      expect(result.current.messages[0]).toEqual(mockMessage);
+    act(() => {
+      messageId = result.current.appendUserMessage('Hello world').id;
     });
+
+    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages[0]).toMatchObject({
+      id: messageId,
+      role: 'user',
+      content: 'Hello world'
+    });
+    expect(result.current.messages[0].timestamp).toBeTruthy();
   });
 
-  describe('updateMessageContent', () => {
-    it('should update the content of the specified message', () => {
-      const { result } = renderHook(() => useStore());
+  it('creates an assistant placeholder and streams content/thinking into it', () => {
+    const { result } = renderHook(() => useStore());
+    let messageId = '';
 
-      const mockMessage: ChatMessage = {
-        id: 'msg-1',
-        role: 'agent',
-        agentId: 'agent-001',
-        content: 'Initial content',
-        timestamp: '2024-01-01T00:00:00Z'
-      };
-
-      act(() => {
-        result.current.addMessage(mockMessage);
-        result.current.updateMessageContent('msg-1', 'Updated content');
-      });
-
-      expect(result.current.messages[0].content).toBe(
-        'Initial contentUpdated content'
-      );
+    act(() => {
+      messageId = result.current.appendAssistantPlaceholder('agent-001').id;
+      result.current.appendAssistantThinking(messageId, 'Thought 1. ');
+      result.current.appendAssistantThinking(messageId, 'Thought 2.');
+      result.current.appendAssistantContent(messageId, 'Answer ');
+      result.current.appendAssistantContent(messageId, 'segment.');
     });
+
+    const assistantMessage = result.current.messages.find(
+      (msg) => msg.id === messageId
+    );
+
+    expect(assistantMessage).toBeDefined();
+    expect(assistantMessage?.thinking).toBe('Thought 1. Thought 2.');
+    expect(assistantMessage?.content).toBe('Answer segment.');
   });
 
-  describe('updateMessageThinking', () => {
-    it('should update the thinking of the specified message', () => {
-      const { result } = renderHook(() => useStore());
+  it('replaces message content when requested', () => {
+    const { result } = renderHook(() => useStore());
+    let messageId = '';
 
-      const mockMessage: ChatMessage = {
-        id: 'msg-1',
-        role: 'agent',
-        agentId: 'agent-001',
-        content: '',
-        thinking: '',
-        timestamp: '2024-01-01T00:00:00Z'
-      };
-
-      act(() => {
-        result.current.addMessage(mockMessage);
-        result.current.updateMessageThinking('msg-1', 'Thinking content');
+    act(() => {
+      messageId = result.current.appendAssistantPlaceholder('agent-001').id;
+      result.current.replaceMessage(messageId, {
+        content: 'Static error message',
+        thinking: undefined
       });
-
-      expect(result.current.messages[0].thinking).toBe('Thinking content');
     });
+
+    const message = result.current.messages.find((msg) => msg.id === messageId);
+    expect(message?.content).toBe('Static error message');
+    expect(message?.thinking).toBeUndefined();
   });
 
-  describe('setIsStreaming', () => {
-    it('should set isStreaming correctly', () => {
-      const { result } = renderHook(() => useStore());
+  it('builds API-ready message payloads from the transcript', () => {
+    const { result } = renderHook(() => useStore());
 
-      act(() => {
-        result.current.setIsStreaming(true);
-      });
-
-      expect(result.current.isStreaming).toBe(true);
-
-      act(() => {
-        result.current.setIsStreaming(false);
-      });
-
-      expect(result.current.isStreaming).toBe(false);
+    act(() => {
+      result.current.appendUserMessage('Hi');
+      const assistantId =
+        result.current.appendAssistantPlaceholder('agent-001').id;
+      result.current.appendAssistantContent(assistantId, 'Hello there');
     });
+
+    const payload = result.current.buildRequestMessages();
+    expect(payload).toEqual([
+      { role: 'user', content: 'Hi' },
+      { role: 'assistant', content: 'Hello there' }
+    ]);
+  });
+
+  it('clears messages when requested', () => {
+    const { result } = renderHook(() => useStore());
+
+    act(() => {
+      result.current.appendUserMessage('Hi');
+      result.current.clearMessages();
+    });
+
+    expect(result.current.messages).toHaveLength(0);
+  });
+
+  it('toggles isStreaming state', () => {
+    const { result } = renderHook(() => useStore());
+
+    act(() => {
+      result.current.setIsStreaming(true);
+    });
+    expect(result.current.isStreaming).toBe(true);
+
+    act(() => {
+      result.current.setIsStreaming(false);
+    });
+    expect(result.current.isStreaming).toBe(false);
   });
 });
