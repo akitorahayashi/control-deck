@@ -1,30 +1,29 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useStore } from '@/store';
 import { ChatArea } from '@/components/chat/ChatArea';
-import { mockConversations } from '@/lib/mocks';
-import { useEffect } from 'react';
 import Heading from '../ui/typography/Heading';
 import Paragraph from '../ui/typography/Paragraph';
 import { StatusBar } from '../ui/StatusBar/StatusBar';
+import { mockConversations } from '@/lib/mocks';
 
 export const AgentView = () => {
-  const { selectedAgent, setMessages } = useStore();
+  const selectedAgent = useStore((state) => state.selectedAgent);
+  const clearMessages = useStore((state) => state.clearMessages);
+  const setMessages = useStore((state) => state.setMessages);
 
   useEffect(() => {
-    if (selectedAgent) {
+    if (process.env.NEXT_PUBLIC_USE_MOCK === 'true' && selectedAgent) {
       const conversation = mockConversations.find(
         (c) => c.agentId === selectedAgent.id
       );
       setMessages(conversation ? conversation.messages : []);
-    } else {
-      setMessages([]);
     }
   }, [selectedAgent, setMessages]);
 
   const handleChatReset = () => {
-    setMessages([]);
+    clearMessages();
   };
 
   if (!selectedAgent) {

@@ -11,3 +11,13 @@ export interface AgentConversation {
   agentId: string;
   messages: ChatMessage[];
 }
+
+export type ChatCompletionRole = 'system' | 'user' | 'assistant' | 'tool';
+
+export interface ChatCompletionMessagePayload {
+  role: ChatCompletionRole;
+  content?: string;
+  think?: string;
+  images?: string[];
+  tool_calls?: unknown[];
+}
