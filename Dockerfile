@@ -33,7 +33,33 @@ COPY . .
 RUN pnpm build
 
 # ---------------------------------
-# Stage 2: Production
+# Stage 2: Development
+# ---------------------------------
+FROM node:20-slim AS development
+
+# Install pnpm
+RUN npm install -g pnpm@10.15.1
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies
+RUN pnpm install --no-frozen-lockfile
+
+# Copy source code
+COPY . .
+
+# Expose port 3000
+EXPOSE 3000
+
+# Start development server
+CMD ["pnpm", "run", "dev"]
+
+# ---------------------------------
+# Stage 3: Production
 # ---------------------------------
 # Use the same base image as the build stage
 FROM node:20-slim AS production
