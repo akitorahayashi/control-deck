@@ -130,11 +130,11 @@ Key state actions:
 
 ## Chat Backend Integration
 
-The chat experience is backed by the Django API introduced in Phase 1. The helper at `frontend/src/lib/chatService.ts` wraps the `/api/v1/agents/{agentId}/chat/` endpoint, parses Server-Sent Events, and exposes ergonomic callbacks (`onChunk`, `onComplete`, `onError`) for the UI store.
+The chat experience is backed by the Django API introduced in Phase 1. The helper at `src/lib/chatService.ts` wraps the `/api/v1/agents/{agentId}/chat/` endpoint, parses Server-Sent Events, and exposes ergonomic callbacks (`onChunk`, `onComplete`, `onError`) for the UI store.
 
 Configure the browser-visible base URL with `NEXT_PUBLIC_BACKEND_URL`. When omitted, the helper defaults to `/api/v1`, which aligns with the development proxy configured in `next.config.ts`. Ensure `API_HOST` and `API_PORT` remain set so Next.js can forward `/api/*` calls to the Django server during local development.
 
-Mock data under `frontend/src/lib/mocks` is preserved for tests and manual demos only; runtime components now rely exclusively on the streaming API.
+Mock data under `src/lib/mocks` is preserved for tests and manual demos only; runtime components now rely exclusively on the streaming API.
 
 ## Development
 

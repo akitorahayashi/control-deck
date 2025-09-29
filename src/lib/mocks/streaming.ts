@@ -7,10 +7,11 @@ export const mockStreamingResponse = (userInput: string) => {
     appendAssistantPlaceholder,
     appendAssistantContent,
     appendAssistantThinking,
-    setIsStreaming
+    setIsStreaming,
+    isStreaming
   } = useStore.getState();
 
-  if (!selectedAgent) return;
+  if (!selectedAgent || isStreaming) return;
 
   appendUserMessage(userInput);
   const agentMessageId = appendAssistantPlaceholder(selectedAgent.id).id;
@@ -46,20 +47,25 @@ export const mockStreamingResponse = (userInput: string) => {
   ];
 
   let thinkingIndex = 0;
-  const thinkingInterval = setInterval(() => {
+  let responseIndex = 0;
+  let thinkingInterval: NodeJS.Timeout | null = null;
+  let responseInterval: NodeJS.Timeout | null = null;
+
+  thinkingInterval = setInterval(() => {
     if (thinkingIndex < thinkingChunks.length) {
       appendAssistantThinking(agentMessageId, thinkingChunks[thinkingIndex]);
       thinkingIndex++;
     } else {
-      clearInterval(thinkingInterval);
+      clearInterval(thinkingInterval!);
+      thinkingInterval = null;
 
-      let responseIndex = 0;
-      const responseInterval = setInterval(() => {
+      responseInterval = setInterval(() => {
         if (responseIndex < responseChunks.length) {
           appendAssistantContent(agentMessageId, responseChunks[responseIndex]);
           responseIndex++;
         } else {
-          clearInterval(responseInterval);
+          clearInterval(responseInterval!);
+          responseInterval = null;
           setIsStreaming(false);
         }
       }, 150);

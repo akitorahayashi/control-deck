@@ -64,7 +64,10 @@ describe('chatService', () => {
         '/api/v1/agents/agent-1/chat/',
         expect.objectContaining({
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'text/event-stream'
+          },
           body: JSON.stringify({
             messages: [{ role: 'user', content: 'Hi' }],
             stream: false
@@ -125,6 +128,12 @@ describe('chatService', () => {
       const mockResponse = {
         ok: true,
         status: 200,
+        headers: {
+          get: (key: string) => {
+            if (key === 'content-type') return 'text/event-stream';
+            return null;
+          }
+        },
         body: {
           getReader: () => ({
             read: vi
@@ -138,6 +147,7 @@ describe('chatService', () => {
                 done: false
               })
               .mockResolvedValueOnce({ done: true }),
+            cancel: vi.fn(),
             releaseLock: vi.fn()
           })
         }
@@ -168,6 +178,12 @@ describe('chatService', () => {
       const mockResponse = {
         ok: true,
         status: 200,
+        headers: {
+          get: (key: string) => {
+            if (key === 'content-type') return 'text/event-stream';
+            return null;
+          }
+        },
         body: {
           getReader: () => ({
             read: vi
@@ -177,6 +193,7 @@ describe('chatService', () => {
                 done: false
               })
               .mockResolvedValueOnce({ done: true }),
+            cancel: vi.fn(),
             releaseLock: vi.fn()
           })
         }

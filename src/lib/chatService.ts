@@ -71,7 +71,7 @@ const getBackendBaseUrl = (): string => {
 const parseSseEvent = (
   event: string
 ): { type: string; data: string | null } => {
-  const lines = event.split('\n');
+  const lines = event.split(/\r?\n/);
   let type = 'message';
   const dataParts: string[] = [];
 
@@ -87,6 +87,56 @@ const parseSseEvent = (
   }
 
   return { type, data: dataParts.length ? dataParts.join('\n') : null };
+};
+
+const processEventData = (
+  data: string | null,
+  type: string,
+  onChunk?: (chunk: ChatStreamChunk) => void,
+  onComplete?: (finalPayload?: unknown) => void
+) => {
+  if (data === null) return false;
+
+  if (data === '[DONE]') {
+    onComplete?.();
+    return true;
+  }
+
+  if (type === 'error' || data.startsWith('error')) {
+    let detail: unknown = data;
+    let message = 'Chat stream returned an error';
+    let status = 500;
+    try {
+      const parsed = JSON.parse(data) as {
+        error?: { status?: number; detail?: string };
+      };
+      detail = parsed;
+      if (parsed.error?.detail) {
+        message = parsed.error.detail;
+      }
+      if (parsed.error?.status) {
+        status = parsed.error.status;
+      }
+    } catch {
+      if (data.trim()) {
+        message = data.trim();
+      }
+    }
+    throw buildError(status, message, detail);
+  }
+
+  try {
+    const chunk = JSON.parse(data) as ChatStreamChunk;
+    onChunk?.(chunk);
+  } catch (error) {
+    const err =
+      error instanceof Error
+        ? error
+        : new Error('Failed to parse chat stream chunk');
+    (err as ErrorWithMeta).detail = data;
+    throw err;
+  }
+  return false;
 };
 
 const buildError = (
@@ -132,13 +182,14 @@ export const sendChat = async (params: SendChatParams): Promise<unknown> => {
     response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Accept: 'text/event-stream'
       },
       body: JSON.stringify(payload),
       signal
     });
   } catch (error) {
-    console.log('fetch error:', error);
+    console.debug('fetch error:', error);
     if (
       error &&
       typeof error === 'object' &&
@@ -146,12 +197,12 @@ export const sendChat = async (params: SendChatParams): Promise<unknown> => {
       'name' in error &&
       error.name === 'AbortError'
     ) {
-      console.log('is AbortError');
+      console.debug('is AbortError');
       const abortError = new Error('Chat request was aborted');
       emitError(abortError);
       throw abortError;
     }
-    console.log('not AbortError');
+    console.debug('not AbortError');
     const err =
       error instanceof Error
         ? error
@@ -186,6 +237,14 @@ export const sendChat = async (params: SendChatParams): Promise<unknown> => {
     return data;
   }
 
+  const contentType = response.headers.get('content-type');
+  if (!contentType?.includes('text/event-stream')) {
+    // Fallback to JSON response
+    const data = await response.json();
+    onComplete?.(data);
+    return data;
+  }
+
   if (!response.body) {
     const error = new Error(
       'Streaming response is not supported in this environment'
@@ -206,51 +265,13 @@ export const sendChat = async (params: SendChatParams): Promise<unknown> => {
       }
 
       buffer += decoder.decode(value, { stream: true });
-      const events = buffer.split('\n\n');
+      const events = buffer.split(/\r?\n\r?\n/);
       buffer = events.pop() ?? '';
 
       for (const event of events) {
         const { type, data } = parseSseEvent(event);
-        if (data === null) continue;
-
-        if (data === '[DONE]') {
-          onComplete?.();
+        if (processEventData(data, type, onChunk, onComplete)) {
           return;
-        }
-
-        if (type === 'error') {
-          let detail: unknown = data;
-          let message = 'Chat stream returned an error';
-          let status = response.status;
-          try {
-            const parsed = JSON.parse(data) as {
-              error?: { status?: number; detail?: string };
-            };
-            detail = parsed;
-            if (parsed.error?.detail) {
-              message = parsed.error.detail;
-            }
-            if (parsed.error?.status) {
-              status = parsed.error.status;
-            }
-          } catch {
-            if (data.trim()) {
-              message = data.trim();
-            }
-          }
-          throw buildError(status, message, detail);
-        }
-
-        try {
-          const chunk = JSON.parse(data) as ChatStreamChunk;
-          onChunk?.(chunk);
-        } catch (error) {
-          const err =
-            error instanceof Error
-              ? error
-              : new Error('Failed to parse chat stream chunk');
-          (err as ErrorWithMeta).detail = data;
-          throw err;
         }
       }
     }
@@ -260,37 +281,7 @@ export const sendChat = async (params: SendChatParams): Promise<unknown> => {
     if (trimmedBuffer) {
       const { type, data } = parseSseEvent(trimmedBuffer);
       if (data && data !== '[DONE]') {
-        if (type === 'error') {
-          let status = response.status;
-          let message = data;
-          let detail: unknown = data;
-          try {
-            const parsed = JSON.parse(data) as {
-              error?: { status?: number; detail?: string };
-            };
-            detail = parsed;
-            if (parsed.error?.detail) {
-              message = parsed.error.detail;
-            }
-            if (parsed.error?.status) {
-              status = parsed.error.status;
-            }
-          } catch {
-            // keep defaults
-          }
-          throw buildError(status, message, detail);
-        }
-        try {
-          const chunk = JSON.parse(data) as ChatStreamChunk;
-          onChunk?.(chunk);
-        } catch (error) {
-          const err =
-            error instanceof Error
-              ? error
-              : new Error('Failed to parse trailing chat stream chunk');
-          (err as ErrorWithMeta).detail = data;
-          throw err;
-        }
+        processEventData(data, type, onChunk, onComplete);
       } else if (data === '[DONE]') {
         onComplete?.();
         return;
@@ -321,6 +312,7 @@ export const sendChat = async (params: SendChatParams): Promise<unknown> => {
     emitError(unknownError);
     throw unknownError;
   } finally {
+    reader.cancel();
     reader.releaseLock();
   }
 };

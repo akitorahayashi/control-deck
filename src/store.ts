@@ -51,6 +51,7 @@ interface Store {
   setSelectedAgent: (agent: Agent | null) => void;
   messages: ChatMessage[];
   setMessages: (messages: ChatMessage[]) => void;
+  conversations: Record<string, ChatMessage[]>;
   clearMessages: () => void;
   appendUserMessage: (content: string) => ChatMessage;
   appendAssistantPlaceholder: (agentId: string) => ChatMessage;
@@ -67,19 +68,47 @@ export const useStore = create<Store>()((set, get) => ({
   agents: [],
   setAgents: (agents) => set({ agents }),
   selectedAgent: null,
+  messages: [],
+  conversations: {},
   setSelectedAgent: (agent) =>
     set((state) => {
-      const currentId = state.selectedAgent?.id ?? null;
-      const nextId = agent?.id ?? null;
-      if (currentId === nextId) {
+      const currentAgentId = state.selectedAgent?.id;
+      const nextAgentId = agent?.id;
+
+      if (currentAgentId === nextAgentId) {
         return { selectedAgent: agent };
       }
-      return { selectedAgent: agent, messages: [] };
+
+      const newConversations = { ...state.conversations };
+
+      if (currentAgentId && state.messages.length > 0) {
+        newConversations[currentAgentId] = state.messages;
+      }
+
+      const nextMessages =
+        (nextAgentId ? newConversations[nextAgentId] : []) || [];
+
+      return {
+        selectedAgent: agent,
+        messages: nextMessages,
+        conversations: newConversations,
+        isStreaming: false
+      };
     }),
-  messages: [],
   setMessages: (messages) => set({ messages }),
   clearMessages: () =>
-    set((state) => (state.messages.length ? { messages: [] } : state)),
+    set((state) => {
+      const currentAgentId = state.selectedAgent?.id;
+      if (!currentAgentId) return {};
+
+      const newConversations = { ...state.conversations };
+      delete newConversations[currentAgentId];
+
+      return {
+        messages: [],
+        conversations: newConversations
+      };
+    }),
   appendUserMessage: (content) => {
     const message: ChatMessage = {
       id: createMessageId(),

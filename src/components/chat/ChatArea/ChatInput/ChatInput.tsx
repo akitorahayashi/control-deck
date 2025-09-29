@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useRef } from 'react';
 import { TextArea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useStore } from '@/store';
@@ -12,7 +12,7 @@ const ERROR_FALLBACK_MESSAGE =
 
 const ChatInput = () => {
   const [inputMessage, setInputMessage] = useState('');
-  const selectedAgentRaw = useStore((state) => state.selectedAgent);
+  const selectedAgent = useStore((state) => state.selectedAgent);
   const chatInputRef = useStore((state) => state.chatInputRef);
   const isStreaming = useStore((state) => state.isStreaming);
   const setIsStreaming = useStore((state) => state.setIsStreaming);
@@ -29,11 +29,20 @@ const ChatInput = () => {
   const replaceMessage = useStore((state) => state.replaceMessage);
   const buildRequestMessages = useStore((state) => state.buildRequestMessages);
 
-  const selectedAgent = useMemo(() => selectedAgentRaw, [selectedAgentRaw]);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const handleSubmit = async () => {
     const trimmed = inputMessage.trim();
     if (!trimmed || !selectedAgent || isStreaming) return;
+
+    // 前のリクエストがあれば中断する
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    // 新しいAbortControllerを作成
+    abortControllerRef.current = new AbortController();
+    const { signal } = abortControllerRef.current;
 
     let assistantMessageId: string | null = null;
     let didError = false;
@@ -48,6 +57,7 @@ const ChatInput = () => {
         agentId: selectedAgent.id,
         messages: buildRequestMessages(),
         stream: true,
+        signal,
         onChunk: (chunk) => {
           if (!assistantMessageId) return;
           const choice = chunk.choices?.[0];
@@ -61,12 +71,9 @@ const ChatInput = () => {
             appendAssistantContent(assistantMessageId, delta.content);
           }
         },
-        onComplete: () => {
-          setIsStreaming(false);
-        },
+        onComplete: () => {},
         onError: (error) => {
           didError = true;
-          setIsStreaming(false);
           if (assistantMessageId) {
             replaceMessage(assistantMessageId, {
               content: ERROR_FALLBACK_MESSAGE,
@@ -90,6 +97,7 @@ const ChatInput = () => {
       }
     } finally {
       setIsStreaming(false);
+      abortControllerRef.current = null; // 処理完了後にrefをクリア
     }
   };
 

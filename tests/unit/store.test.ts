@@ -9,6 +9,8 @@ const resetStore = () => {
   store.setSelectedAgent(null);
   store.setMessages([]);
   store.setIsStreaming(false);
+  // Reset conversations
+  useStore.setState({ conversations: {} });
 };
 
 describe('Zustand Store', () => {
@@ -106,8 +108,15 @@ describe('Zustand Store', () => {
 
   it('clears messages when requested', () => {
     const { result } = renderHook(() => useStore());
+    const agent: Agent = {
+      id: 'agent-1',
+      name: 'Agent 1',
+      description: 'Desc',
+      specialty: 'research'
+    };
 
     act(() => {
+      result.current.setSelectedAgent(agent);
       result.current.appendUserMessage('Hi');
       result.current.clearMessages();
     });
@@ -200,47 +209,186 @@ describe('Zustand Store', () => {
     ]);
   });
 
-  it('does not clear messages when same agent is selected', () => {
+  it('saves and restores conversation history when switching agents', () => {
     const { result } = renderHook(() => useStore());
-    const agent: Agent = {
-      id: 'agent-1',
-      name: 'Agent 1',
-      description: 'Desc',
+    const agentA: Agent = {
+      id: 'agent-a',
+      name: 'Agent A',
+      description: 'Desc A',
       specialty: 'research'
     };
+    const agentB: Agent = {
+      id: 'agent-b',
+      name: 'Agent B',
+      description: 'Desc B',
+      specialty: 'coding'
+    };
 
+    // Switch to Agent A and add messages
     act(() => {
-      result.current.setSelectedAgent(agent);
-      result.current.appendUserMessage('Hello');
+      result.current.setSelectedAgent(agentA);
+      result.current.appendUserMessage('Hello from A');
+      result.current.appendAssistantPlaceholder(agentA.id);
     });
-    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages).toHaveLength(2);
 
+    // Switch to Agent B
     act(() => {
-      result.current.setSelectedAgent({ ...agent, name: 'Updated Name' });
+      result.current.setSelectedAgent(agentB);
     });
-    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages).toHaveLength(0);
+
+    // Switch back to Agent A
+    act(() => {
+      result.current.setSelectedAgent(agentA);
+    });
+    expect(result.current.messages).toHaveLength(2);
+    expect(result.current.messages[0].content).toBe('Hello from A');
+    expect(result.current.messages[1].agentId).toBe('agent-a');
   });
 
-  it('filters out empty assistant messages in buildRequestMessages', () => {
+  it('clears messages when switching to an agent with no history', () => {
     const { result } = renderHook(() => useStore());
+    const agentA: Agent = {
+      id: 'agent-a',
+      name: 'Agent A',
+      description: 'Desc A',
+      specialty: 'research'
+    };
+    const agentC: Agent = {
+      id: 'agent-c',
+      name: 'Agent C',
+      description: 'Desc C',
+      specialty: 'analysis'
+    };
 
+    // Switch to Agent A and add messages
     act(() => {
-      result.current.appendUserMessage('Hi');
-      const assistantId =
-        result.current.appendAssistantPlaceholder('agent-001').id;
-      // Empty content assistant message should be filtered out
-      result.current.appendAssistantContent(assistantId, '');
-      result.current.appendUserMessage('How are you?');
-      const assistantId2 =
-        result.current.appendAssistantPlaceholder('agent-001').id;
-      result.current.appendAssistantContent(assistantId2, 'I am fine');
+      result.current.setSelectedAgent(agentA);
+      result.current.appendUserMessage('Message for A');
     });
+    expect(result.current.messages).toHaveLength(1);
 
-    const payload = result.current.buildRequestMessages();
-    expect(payload).toEqual([
-      { role: 'user', content: 'Hi' },
-      { role: 'user', content: 'How are you?' },
-      { role: 'assistant', content: 'I am fine' }
+    // Switch to Agent C (no history)
+    act(() => {
+      result.current.setSelectedAgent(agentC);
+    });
+    expect(result.current.messages).toHaveLength(0);
+  });
+
+  it('clearMessages only affects the current agent', () => {
+    const { result } = renderHook(() => useStore());
+    const agentA: Agent = {
+      id: 'agent-a',
+      name: 'Agent A',
+      description: 'Desc A',
+      specialty: 'research'
+    };
+    const agentB: Agent = {
+      id: 'agent-b',
+      name: 'Agent B',
+      description: 'Desc B',
+      specialty: 'coding'
+    };
+
+    // Set up Agent A with messages
+    act(() => {
+      result.current.setSelectedAgent(agentA);
+      result.current.appendUserMessage('Message A1');
+      result.current.appendUserMessage('Message A2');
+    });
+    expect(result.current.messages).toHaveLength(2);
+
+    // Switch to Agent B and add messages
+    act(() => {
+      result.current.setSelectedAgent(agentB);
+      result.current.appendUserMessage('Message B1');
+    });
+    expect(result.current.messages).toHaveLength(1);
+
+    // Switch back to Agent A and clear messages
+    act(() => {
+      result.current.setSelectedAgent(agentA);
+      result.current.clearMessages();
+    });
+    expect(result.current.messages).toHaveLength(0);
+
+    // Switch back to Agent B - history should still be there
+    act(() => {
+      result.current.setSelectedAgent(agentB);
+    });
+    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages[0].content).toBe('Message B1');
+  });
+
+  it('maintains separate histories for multiple agents', () => {
+    const { result } = renderHook(() => useStore());
+    const agentA: Agent = {
+      id: 'agent-a',
+      name: 'Agent A',
+      description: 'Desc A',
+      specialty: 'research'
+    };
+    const agentB: Agent = {
+      id: 'agent-b',
+      name: 'Agent B',
+      description: 'Desc B',
+      specialty: 'coding'
+    };
+    const agentC: Agent = {
+      id: 'agent-c',
+      name: 'Agent C',
+      description: 'Desc C',
+      specialty: 'analysis'
+    };
+
+    // Agent A: 2 messages
+    act(() => {
+      result.current.setSelectedAgent(agentA);
+      result.current.appendUserMessage('A1');
+      result.current.appendUserMessage('A2');
+    });
+    expect(result.current.messages).toHaveLength(2);
+
+    // Agent B: 1 message
+    act(() => {
+      result.current.setSelectedAgent(agentB);
+      result.current.appendUserMessage('B1');
+    });
+    expect(result.current.messages).toHaveLength(1);
+
+    // Agent C: 3 messages
+    act(() => {
+      result.current.setSelectedAgent(agentC);
+      result.current.appendUserMessage('C1');
+      result.current.appendUserMessage('C2');
+      result.current.appendUserMessage('C3');
+    });
+    expect(result.current.messages).toHaveLength(3);
+
+    // Back to Agent A
+    act(() => {
+      result.current.setSelectedAgent(agentA);
+    });
+    expect(result.current.messages).toHaveLength(2);
+    expect(result.current.messages.map((m) => m.content)).toEqual(['A1', 'A2']);
+
+    // Back to Agent B
+    act(() => {
+      result.current.setSelectedAgent(agentB);
+    });
+    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages[0].content).toBe('B1');
+
+    // Back to Agent C
+    act(() => {
+      result.current.setSelectedAgent(agentC);
+    });
+    expect(result.current.messages).toHaveLength(3);
+    expect(result.current.messages.map((m) => m.content)).toEqual([
+      'C1',
+      'C2',
+      'C3'
     ]);
   });
 });

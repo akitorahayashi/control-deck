@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useStore } from '@/store';
 import { ChatArea } from '@/components/chat/ChatArea';
 import Heading from '../ui/typography/Heading';
@@ -8,11 +8,8 @@ import Paragraph from '../ui/typography/Paragraph';
 import { StatusBar } from '../ui/StatusBar/StatusBar';
 
 export const AgentView = () => {
-  const selectedAgentRaw = useStore((state) => state.selectedAgent);
-  const clearMessagesRaw = useStore((state) => state.clearMessages);
-
-  const selectedAgent = useMemo(() => selectedAgentRaw, [selectedAgentRaw]);
-  const clearMessages = useMemo(() => clearMessagesRaw, [clearMessagesRaw]);
+  const selectedAgent = useStore((state) => state.selectedAgent);
+  const clearMessages = useStore((state) => state.clearMessages);
 
   const handleChatReset = () => {
     clearMessages();
