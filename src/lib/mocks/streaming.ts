@@ -24,7 +24,7 @@ export const mockStreamingResponse = ({
   appendAssistantThinking,
   setIsStreaming
 }: MockStreamingParams): MockStreamingCleanup => {
-  if (!selectedAgent || isStreaming) return () => { };
+  if (!selectedAgent || isStreaming) return () => {};
 
   appendUserMessage(userInput);
   const agentMessageId = appendAssistantPlaceholder(selectedAgent.id).id;

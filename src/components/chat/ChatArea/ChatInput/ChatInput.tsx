@@ -99,7 +99,7 @@ const ChatInput = () => {
             appendAssistantContent(assistantMessageId, delta.content);
           }
         },
-        onComplete: () => { },
+        onComplete: () => {},
         onError: (error) => {
           didError = true;
           if (assistantMessageId) {
