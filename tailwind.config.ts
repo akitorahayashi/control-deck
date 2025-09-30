@@ -4,7 +4,7 @@ const config: Config = {
   darkMode: ['class'],
   content: [
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
     extend: {
@@ -39,6 +39,6 @@ const config: Config = {
       }
     }
   },
-  plugins: [], // Temporarily disable plugins to simplify
+  plugins: [] // Temporarily disable plugins to simplify
 };
 export default config;
