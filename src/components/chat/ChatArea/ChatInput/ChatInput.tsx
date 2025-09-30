@@ -39,7 +39,16 @@ const ChatInput = () => {
     setInputMessage('');
 
     if (process.env.NEXT_PUBLIC_USE_MOCK === 'true') {
-      mockStreamingResponse(trimmed);
+      mockStreamingResponse({
+        userInput: trimmed,
+        selectedAgent,
+        isStreaming,
+        appendUserMessage,
+        appendAssistantPlaceholder,
+        appendAssistantContent,
+        appendAssistantThinking,
+        setIsStreaming
+      });
       return;
     }
 
@@ -78,7 +87,7 @@ const ChatInput = () => {
             appendAssistantContent(assistantMessageId, delta.content);
           }
         },
-        onComplete: () => {},
+        onComplete: () => { },
         onError: (error) => {
           didError = true;
           if (assistantMessageId) {

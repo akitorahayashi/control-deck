@@ -1,16 +1,27 @@
-import { useStore } from '@/store';
+import { Agent } from '@/types/agent';
+import { ChatMessage } from '@/types/chat';
 
-export const mockStreamingResponse = (userInput: string) => {
-  const {
-    selectedAgent,
-    appendUserMessage,
-    appendAssistantPlaceholder,
-    appendAssistantContent,
-    appendAssistantThinking,
-    setIsStreaming,
-    isStreaming
-  } = useStore.getState();
+interface MockStreamingParams {
+  userInput: string;
+  selectedAgent: Agent | null;
+  isStreaming: boolean;
+  appendUserMessage: (content: string) => ChatMessage;
+  appendAssistantPlaceholder: (agentId: string) => ChatMessage;
+  appendAssistantContent: (id: string, chunk: string) => void;
+  appendAssistantThinking: (id: string, chunk: string) => void;
+  setIsStreaming: (isStreaming: boolean) => void;
+}
 
+export const mockStreamingResponse = ({
+  userInput,
+  selectedAgent,
+  isStreaming,
+  appendUserMessage,
+  appendAssistantPlaceholder,
+  appendAssistantContent,
+  appendAssistantThinking,
+  setIsStreaming
+}: MockStreamingParams) => {
   if (!selectedAgent || isStreaming) return;
 
   appendUserMessage(userInput);
