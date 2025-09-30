@@ -27,22 +27,24 @@ describe('Streaming Mock', () => {
 
   it('should not run when no agent is selected', () => {
     mockParams.selectedAgent = null;
-    mockStreamingResponse(mockParams);
+    const cleanup = mockStreamingResponse(mockParams);
     expect(mockParams.appendUserMessage).not.toHaveBeenCalled();
     expect(mockParams.appendAssistantPlaceholder).not.toHaveBeenCalled();
+    expect(cleanup).toBeTypeOf('function');
   });
 
   it('should not run when already streaming', () => {
     mockParams.isStreaming = true;
-    mockStreamingResponse(mockParams);
+    const cleanup = mockStreamingResponse(mockParams);
     expect(mockParams.appendUserMessage).not.toHaveBeenCalled();
     expect(mockParams.appendAssistantPlaceholder).not.toHaveBeenCalled();
+    expect(cleanup).toBeTypeOf('function');
   });
 
   it('streams thinking and content chunks into the assistant placeholder', () => {
     vi.useFakeTimers();
 
-    mockStreamingResponse(mockParams);
+    const cleanup = mockStreamingResponse(mockParams);
 
     expect(mockParams.appendUserMessage).toHaveBeenCalledWith('test message');
     expect(mockParams.appendAssistantPlaceholder).toHaveBeenCalledWith(
@@ -56,12 +58,14 @@ describe('Streaming Mock', () => {
     vi.advanceTimersByTime(150 * 13);
     expect(mockParams.appendAssistantContent).toHaveBeenCalled();
     expect(mockParams.setIsStreaming).toHaveBeenLastCalledWith(false);
+
+    expect(cleanup).toBeTypeOf('function');
   });
 
   it('streams thinking before content chunks', () => {
     vi.useFakeTimers();
 
-    mockStreamingResponse(mockParams);
+    const cleanup = mockStreamingResponse(mockParams);
     vi.advanceTimersByTime(100 * 12 + 150 * 13);
 
     const thinkingCalls = mockParams.appendAssistantThinking.mock.calls;
@@ -72,5 +76,33 @@ describe('Streaming Mock', () => {
     expect(mockParams.appendAssistantPlaceholder).toHaveBeenCalledTimes(1);
     expect(thinkingCalls[0][0]).toBe('agent-message');
     expect(contentCalls[0][0]).toBe('agent-message');
+
+    expect(cleanup).toBeTypeOf('function');
+  });
+
+  it('cleanup function stops streaming and clears intervals', () => {
+    vi.useFakeTimers();
+
+    const cleanup = mockStreamingResponse(mockParams);
+
+    // Advance time partially to start thinking phase
+    vi.advanceTimersByTime(100 * 5);
+    expect(mockParams.appendAssistantThinking).toHaveBeenCalled();
+
+    // Reset mocks to track calls after cleanup
+    mockParams.appendAssistantThinking.mockClear();
+    mockParams.appendAssistantContent.mockClear();
+    mockParams.setIsStreaming.mockClear();
+
+    // Call cleanup function
+    cleanup();
+
+    // Verify setIsStreaming(false) was called
+    expect(mockParams.setIsStreaming).toHaveBeenCalledWith(false);
+
+    // Advance time further - no more calls should be made
+    vi.advanceTimersByTime(100 * 20 + 150 * 20);
+    expect(mockParams.appendAssistantThinking).not.toHaveBeenCalled();
+    expect(mockParams.appendAssistantContent).not.toHaveBeenCalled();
   });
 });

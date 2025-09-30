@@ -31,6 +31,7 @@ const ChatInput = () => {
   const buildRequestMessages = useStore((state) => state.buildRequestMessages);
 
   const abortControllerRef = useRef<AbortController | null>(null);
+  const cleanupStreamingRef = useRef<(() => void) | null>(null);
 
   const handleSubmit = async () => {
     const trimmed = inputMessage.trim();
@@ -39,7 +40,12 @@ const ChatInput = () => {
     setInputMessage('');
 
     if (process.env.NEXT_PUBLIC_USE_MOCK === 'true') {
-      mockStreamingResponse({
+      // Clean up any previous streaming
+      if (cleanupStreamingRef.current) {
+        cleanupStreamingRef.current();
+      }
+
+      cleanupStreamingRef.current = mockStreamingResponse({
         userInput: trimmed,
         selectedAgent,
         isStreaming,
@@ -55,6 +61,12 @@ const ChatInput = () => {
     // 前のリクエストがあれば中断する
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
+    }
+
+    // Clean up any previous mock streaming
+    if (cleanupStreamingRef.current) {
+      cleanupStreamingRef.current();
+      cleanupStreamingRef.current = null;
     }
 
     // 新しいAbortControllerを作成

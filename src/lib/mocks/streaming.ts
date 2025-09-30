@@ -12,6 +12,8 @@ interface MockStreamingParams {
   setIsStreaming: (isStreaming: boolean) => void;
 }
 
+export type MockStreamingCleanup = () => void;
+
 export const mockStreamingResponse = ({
   userInput,
   selectedAgent,
@@ -21,8 +23,8 @@ export const mockStreamingResponse = ({
   appendAssistantContent,
   appendAssistantThinking,
   setIsStreaming
-}: MockStreamingParams) => {
-  if (!selectedAgent || isStreaming) return;
+}: MockStreamingParams): MockStreamingCleanup => {
+  if (!selectedAgent || isStreaming) return () => { };
 
   appendUserMessage(userInput);
   const agentMessageId = appendAssistantPlaceholder(selectedAgent.id).id;
@@ -82,4 +84,17 @@ export const mockStreamingResponse = ({
       }, 150);
     }
   }, 100);
+
+  // Return cleanup function to clear intervals
+  return () => {
+    if (thinkingInterval) {
+      clearInterval(thinkingInterval);
+      thinkingInterval = null;
+    }
+    if (responseInterval) {
+      clearInterval(responseInterval);
+      responseInterval = null;
+    }
+    setIsStreaming(false);
+  };
 };
