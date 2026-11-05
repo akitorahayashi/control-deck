@@ -13,7 +13,7 @@ ENV API_HOST=${API_HOST}
 ENV API_PORT=${API_PORT}
 
 # Install pnpm (pin to specific version for lockfile compatibility)
-RUN npm install -g pnpm@10.17.1
+RUN npm install -g pnpm@12.16.1
 
 # Set the working directory for the application
 WORKDIR /app
@@ -38,7 +38,7 @@ RUN pnpm build
 FROM node:20-slim AS development
 
 # Install pnpm
-RUN npm install -g pnpm@10.17.1
+RUN npm install -g pnpm@12.16.1
 
 # Set the working directory
 WORKDIR /app
